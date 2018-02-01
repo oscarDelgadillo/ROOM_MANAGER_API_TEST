@@ -3,4 +3,5 @@ rm_port: 7070
 rm_db_port: 27017
 root_path: /api
 version: /v1
+protocol: http
 

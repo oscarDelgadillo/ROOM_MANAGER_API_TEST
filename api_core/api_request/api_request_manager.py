@@ -4,15 +4,14 @@ import requests
 headers = {'Accept': 'application/json'}
 
 
-# Function: Perform GET or DELETE request
 def get_delete_request(base_url, end_point, method, credentials, meeting_id, params):
+    """This method performs GET or DELETE request"""
     response = None
     uri = base_url + end_point
     if meeting_id is not None:
         headers['Credentials'] = credentials
         headers['ServiceName'] = 'ExchangeServer'
-        uri = uri + '/' + meeting_id
-        print("new uri:", uri)
+        uri = "{}/{}".format(uri, meeting_id)
         if method == 'GET':
             response = requests.get(url=uri, headers=headers, params=params)
         elif method == 'DELETE':
@@ -26,16 +25,15 @@ def get_delete_request(base_url, end_point, method, credentials, meeting_id, par
     return response
 
 
-# Function: Perform POST or PUT request
 def post_put_request(base_url, end_point, method, credentials, meeting_id, data):
+    """This method performs POST or PUT request"""
     response = None
     uri = base_url + end_point
     headers['Credentials'] = credentials
     headers['Content-Type'] = 'application/json'
     if meeting_id is not None:
         headers['ServiceName'] = 'ExchangeServer'
-        uri = uri + '/' + meeting_id
-        print("new uri:", uri)
+        uri = "{}/{}".format(uri, meeting_id)
         if method == 'POST':
             response = requests.post(url=uri, headers=headers, json=data)
         elif method == 'PUT':
