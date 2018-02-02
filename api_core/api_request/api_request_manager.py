@@ -4,14 +4,14 @@ import requests
 headers = {'Accept': 'application/json'}
 
 
-def get_delete_request(base_url, end_point, method, credentials, meeting_id, params):
+def get_delete_request(base_url, end_point, method, credentials, item_id, params):
     """This method performs GET or DELETE request"""
     response = None
     uri = base_url + end_point
-    if meeting_id is not None:
+    if item_id is not None:
         headers['Credentials'] = credentials
         headers['ServiceName'] = 'ExchangeServer'
-        uri = "{}/{}".format(uri, meeting_id)
+        uri = "{}/{}".format(uri, item_id)
         if method == 'GET':
             response = requests.get(url=uri, headers=headers, params=params)
         elif method == 'DELETE':
