@@ -15,5 +15,9 @@ def before_all(context):
     context.version = config_data['version']
     context.protocol = config_data['protocol']
 
-    context.base_url = '{}://{}{}{}{}{}'.format(context.protocol, context.rm_host, ':', context.rm_port, context.root_path,
-                                                  context.version)
+    context.base_url = '{}://{}{}{}{}{}'.format(context.protocol, context.rm_host, ':', context.rm_port,
+                                                context.root_path,
+                                                context.version)
+    context.params = None
+    context.credentials = None
+    context.item_id = None
