@@ -1,5 +1,6 @@
 # Smoke test: get rooms
-from compare import expect
+from behave import given, when
+
 from api_core.api_request.api_request_manager import get_delete_request
 
 
@@ -17,7 +18,16 @@ def step_impl(context):
         context.params['status'] = row['status']
 
 
-@when(u'I send the request')
+@given(u'I have obtained roomsId of the database')
 def step_impl(context):
-    context.response = get_delete_request(context.base_url, context.endpoint, context.method, None, None,
-                                          context.params)
+    context.item_id = '5a720749d54ad40d1882f3e6'
+
+
+@when(u'I {method} to {end_point}/roomsId')
+def step_impl(context, method, end_point):
+    context.end_point = end_point
+    context.method = method
+    context.response = get_delete_request(
+        context.base_url, context.end_point,
+        context.method, None, context.item_id,
+        None)
