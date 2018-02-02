@@ -1,12 +1,8 @@
-@smoke
-Feature: Rooms smoke test
-  Validate service retrieving Rooms
+@smoke @rooms
+Feature: Smoke - Get a specific room
 
-  Scenario: Get Rooms from Server
+  Scenario: Get a specific room, obtaining the "roomsId" of the database
     Given I have rooms created
-    When I set GET to /rooms
-      And I set the following params
-      | from                     | to                       | status |
-      | 2017-09-21T20:00:00.000Z | 2018-02-02T20:30:00.000Z | free   |
-      And I send the request
+      And I have obtained roomsId of the database
+    When I GET to /rooms/roomsId
     Then I should get a response with status code 200
