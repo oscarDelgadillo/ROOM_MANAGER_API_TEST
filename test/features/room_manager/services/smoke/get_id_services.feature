@@ -1,9 +1,13 @@
-Feature: smoke get service id
+@smoke
+Feature: Services Id smoke test
+  Validate service retrieving Services
 
-  Scenario Outline: This scenario verifies the service status code with service Id
-    Given I go to Room Manager services "/services"
-    When I do "GET" to services with service ID : serviceID <service_ID>
-    Then It should return status code "200"
-    Examples:
-      | service_ID               |
-      | 5a74b2679390bb1630a9be2d |
+  Scenario: Get Room Manager Services Id
+    Given I have room manager server up
+    When I set GET to /services
+    And I set the service ID "5a724a899390bb1630a9be1d"
+    Then I should get a response with status code 200
+
+
+
+
