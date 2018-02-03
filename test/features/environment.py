@@ -14,7 +14,7 @@ def before_all(context):
     context.root_path = config_data['root_path']
     context.version = config_data['version']
     context.protocol = config_data['protocol']
-    context.database = config_data['data_base']
+    context.database = config_data['data_base_rm']
 
     context.base_url = '{}://{}{}{}{}{}'.format(context.protocol, context.rm_host, ':', context.rm_port,
                                                 context.root_path,

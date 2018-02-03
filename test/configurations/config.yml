@@ -4,5 +4,5 @@ rm_db_port: 27017
 root_path: /api
 version: /v1
 protocol: http
-data_base : rmserver
+data_base_rm : rmserver
 
