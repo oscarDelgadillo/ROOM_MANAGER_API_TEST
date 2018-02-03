@@ -2,6 +2,7 @@
 from behave import given, when
 
 from api_core.api_request.api_request_manager import get_delete_request
+from api_core.api_request.db_request_manager import get_items
 
 
 @given(u'I have rooms created')
@@ -18,9 +19,11 @@ def step_impl(context):
         context.params['status'] = row['status']
 
 
-@given(u'I have obtained roomsId of the database')
-def step_impl(context):
-    context.item_id = '5a720749d54ad40d1882f3e6'
+@given(u'I have obtained {schema}Id of the database')
+def step_impl(context,schema):
+
+    rooms = get_items(context.rm_host, context.rm_db_port, context.database, schema, None, None)
+    context.item_id = rooms[0]["_id"]
 
 
 @when(u'I {method} to {end_point}/roomsId')
