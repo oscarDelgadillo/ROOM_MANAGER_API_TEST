@@ -36,7 +36,7 @@ def before_all(context):
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
 
-    logger.info("Starting Before Scenario execution...")
+    logger.info("Starting After Scenario execution...")
     if 'Verify that is possible to retrieve free rooms' in scenario.name:
         print("After Meeting _id:", context.after_item_id)
         print("After Credentials:", context.after_credentials)
