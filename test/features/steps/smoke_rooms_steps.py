@@ -1,13 +1,7 @@
 # Smoke test: get rooms
 from behave import given, when
-
 from api_core.api_request.api_request_manager import get_delete_request
 from api_core.api_request.db_request_manager import get_items
-
-
-@given(u'I have rooms created')
-def step_impl(context):
-    print()
 
 
 @when(u'I set the following params')
@@ -20,8 +14,7 @@ def step_impl(context):
 
 
 @given(u'I have obtained {schema}Id of the database')
-def step_impl(context,schema):
-
+def step_impl(context, schema):
     rooms = get_items(context.rm_host, context.rm_db_port, context.database, schema, None, None)
     context.item_id = rooms[0]["_id"]
 
