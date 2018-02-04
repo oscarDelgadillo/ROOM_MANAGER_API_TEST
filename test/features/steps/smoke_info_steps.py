@@ -1,6 +1,4 @@
-from behave import given, when
-
-from api_core.api_request.api_request_manager import get_delete_request
+from behave import given
 
 
 @given(u'I have room manager server up')
