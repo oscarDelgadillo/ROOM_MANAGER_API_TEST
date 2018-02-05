@@ -32,7 +32,11 @@ def before_all(context):
     context.credentials = None
     context.item_id = None
     context.return_data = None
+    context.data = None
 
+    context.after_item_id = None
+    context.after_credentials = None
+    context.after_endpoint = None
 
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
@@ -42,7 +46,7 @@ def after_scenario(context, scenario):
         print("After Meeting _id:", context.after_item_id)
         print("After Credentials:", context.after_credentials)
         print("Endpoint:", context.after_endpoint)
-        print("DELETE Meeting Response Status Code:",
-              get_delete_request(context.base_url, context.after_endpoint, 'DELETE', context.after_credentials,
-                                 context.after_item_id,
-                                 None).status_code)
+        # print("DELETE Meeting Response Status Code:",
+        #       # get_delete_request(context.base_url, context.after_endpoint, 'DELETE', context.after_credentials,
+        #       #                    context.after_item_id,
+        #       #                    None).status_code)

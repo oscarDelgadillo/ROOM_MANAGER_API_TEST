@@ -11,8 +11,8 @@ from jsonschema.exceptions import ValidationError
 import json
 
 
-@given(u'I have a meeting {method} to {endpoint} with the following info')
-def step_impl(context, endpoint, method):
+@given(u'I set the following meeting info')
+def step_impl(context):
     context.data = {}
     for row in context.table:
         context.data['organizer'] = row['organizer']
@@ -24,8 +24,10 @@ def step_impl(context, endpoint, method):
         context.data['attendees'] = [row['attendees']]
         context.data['optionalAttendees'] = [row['optionalAttendees']]
 
-    context.method = method
-    context.endpoint = endpoint
+
+
+@given(u'I have a meeting {method} to {endpoint} with the following info')
+def step_impl(context, endpoint, method):
     context.after_endpoint = context.endpoint
 
     # Creating meeting
