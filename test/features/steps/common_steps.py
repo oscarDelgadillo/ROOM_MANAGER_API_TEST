@@ -12,8 +12,6 @@ from api_core.api_request.api_request_manager import request
 def step_impl(context, method, endpoint):
     context.method = method
     context.endpoint = endpoint
-    print(context.method)
-    print(context.endpoint)
 
 
 @step(u'I set {credentials} as credentials')
@@ -25,3 +23,4 @@ def step_impl(context, credentials):
 def step_impl(context):
     context.response = request(context.base_url, context.endpoint, context.method, context.credentials, context.item_id,
                                context.data, context.params)
+    print(context.response.status_code,"*******************")

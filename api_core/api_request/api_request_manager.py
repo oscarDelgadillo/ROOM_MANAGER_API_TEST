@@ -28,24 +28,18 @@ def post_put_request(base_url, end_point, method, credentials, item_id, data):
     """This method performs POST or PUT request"""
     headers = {'Accept': 'application/json'}
     response = None
-    print("caraohhhhhhhhhhhh1111111111111")
     uri = base_url + end_point
-    print(uri)
     headers['Content-Type'] = 'application/json'
     headers['Credentials'] = credentials
-    headers['Content-Type'] = 'application/json'
     if item_id is not None:
         headers['ServiceName'] = 'ExchangeServer'
         uri = "{}/{}".format(uri, item_id)
         if method == 'POST':
             response = requests.post(url=uri, headers=headers, json=data)
         elif method == 'PUT':
-            headers['Accept'] = 'application/json'
             response = requests.put(url=uri, headers=headers, json=data)
             print(response.status_code)
     elif method == 'POST':
-        headers['Accept'] = 'application/json'
-        headers['Content-Type'] = 'application/json'
         response = requests.post(url=uri, headers=headers, json=data)
 
     return response

@@ -1,6 +1,6 @@
 @crud
 Feature: Put services using service ID
-
+  @putIdServices
   Scenario: This scenario verify put service by ID
     Given Given I have a Service Created with this data:
       | hostname                 | username | password    | type           |
@@ -11,3 +11,5 @@ Feature: Put services using service ID
       | oscar    | Password123 |
     And I send the request
     Then I should get a response with status code 200
+    When I set DELETE to /services
+      And I send the request
