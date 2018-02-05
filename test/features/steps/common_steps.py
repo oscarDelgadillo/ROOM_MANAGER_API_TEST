@@ -32,6 +32,13 @@ def step_impl(context, credentials):
 
 @step(u'I send the request')
 def step_impl(context):
+    print(context.base_url)
+    print(context.endpoint)
+    print(context.method)
+    print(context.credentials)
+    print(context.item_id)
+    print(context.params)
     context.response = get_delete_request(context.base_url, context.endpoint, context.method, context.credentials,
                                           context.item_id,
                                           context.params)
+    print("pasoooooooooooooooooo")

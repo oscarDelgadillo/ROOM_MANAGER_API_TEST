@@ -15,5 +15,5 @@ def step_impl(context):
     print(context.endpoint)
     print(context.method)
     print(context.base_url)
-    context.response = post_put_request(context.base_url, context.endpoint, context.method, None, context.item_id,context.response)
-    context.status = context.response.status_code
+    # context.response = post_put_request(context.base_url, context.endpoint, context.method, None, context.item_id,context.params)
+    # context.status = context.response.status_code
