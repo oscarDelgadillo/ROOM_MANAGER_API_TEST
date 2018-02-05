@@ -1,17 +1,13 @@
 @crud
 Feature: Delete services using service ID
 
-  Scenario:
+  Background:
     Given I have a Service Created with this data:
-      | hostname        | username | password    | type           |
-      | marc@at05.local | marco    | Password123 | ExchangeServer |
+      | hostname                 | username | password    | type           |
+      | maaaaaarcoooo@at05.local | marco    | Password123 | ExchangeServer |
 
-
-
-#  Scenario Outline: This scenario verify Delete ID
-#    Given I go to Room Manager services "/services"
-#    When I do "DELETE" to services with service ID : serviceID <service_ID>
-#    Then It should return status code "200"
-#    Examples:
-#      | service_ID               |
-#      | 5a7247619390bb1630a9be19 |
+  Scenario: This scenario verify Delete by ID
+    Given I have a services created in "at05.local"
+    When I set DELETE to /services
+     And I send the request
+    Then I should get a response with status code 200
