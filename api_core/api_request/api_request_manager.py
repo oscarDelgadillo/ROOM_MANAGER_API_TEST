@@ -41,3 +41,10 @@ def post_put_request(base_url, end_point, method, credentials, item_id, data):
     elif method == 'POST':
         response = requests.post(url=uri, headers=headers, json=data)
     return response
+
+
+def request(base_url, endpoint, method, credentials, item_id, data, params):
+    if method == 'GET' or method == 'DELETE':
+        return get_delete_request(base_url, endpoint, method, credentials, item_id, params)
+    elif method == 'POST' or method == 'PUT':
+        return post_put_request(base_url, endpoint, method, credentials, item_id, data)
