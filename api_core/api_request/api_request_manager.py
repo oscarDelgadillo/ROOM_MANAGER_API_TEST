@@ -28,6 +28,7 @@ def get_delete_request(base_url, end_point, method, credentials, item_id, params
 def post_put_request(base_url, end_point, method, credentials, meeting_id, data):
     """This method performs POST or PUT request"""
     response = None
+    print("carajoooooooooooooo1")
     uri = base_url + end_point
     headers['Credentials'] = credentials
     headers['Content-Type'] = 'application/json'
@@ -35,9 +36,14 @@ def post_put_request(base_url, end_point, method, credentials, meeting_id, data)
         headers['ServiceName'] = 'ExchangeServer'
         uri = "{}/{}".format(uri, meeting_id)
         if method == 'POST':
+            print("carajoooooooooooooo2")
             response = requests.post(url=uri, headers=headers, json=data)
         elif method == 'PUT':
             response = requests.put(url=uri, headers=headers, json=data)
     elif method == 'POST':
+        print("carajoooooooooooooo3")
+        print(data)
+        print(headers)
+        print(uri)
         response = requests.post(url=uri, headers=headers, json=data)
     return response
