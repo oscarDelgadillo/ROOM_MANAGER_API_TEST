@@ -31,13 +31,14 @@ def before_all(context):
     context.params = None
     context.credentials = None
     context.item_id = None
+    context.return_data = None
 
 
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
 
     logger.info("Starting After Scenario execution...")
-    if 'Verify that is possible to retrieve free rooms' in scenario.name:
+    if 'Verify that is possible to retrieve free rooms' or 'Verify that is possible to retrieve busy rooms' in scenario.name:
         print("After Meeting _id:", context.after_item_id)
         print("After Credentials:", context.after_credentials)
         print("Endpoint:", context.after_endpoint)
