@@ -22,3 +22,4 @@ def before_all(context):
     context.params = None
     context.credentials = None
     context.item_id = None
+    context.data = None

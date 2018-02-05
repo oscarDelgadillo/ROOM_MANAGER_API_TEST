@@ -13,6 +13,6 @@ def step_impl(context):
         context.params['deleteLockTime'] = int(row['deleteLockTime'])
 
 
-@then(u'validate response with get method')
+@then(u'I response should be equal in the database')
 def step_impl(context):
-    expect(1).to_equal(2)
+    print()
