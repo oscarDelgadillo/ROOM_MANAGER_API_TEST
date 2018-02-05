@@ -50,3 +50,10 @@ def after_scenario(context, scenario):
         #       # get_delete_request(context.base_url, context.after_endpoint, 'DELETE', context.after_credentials,
         #       #                    context.after_item_id,
         #       #                    None).status_code)
+
+
+def after_scenario(context, scenario):
+    if 'afeter_delete_meeting' in scenario.tags:
+        get_delete_request(context.base_url, context.end_point, context.after_method, context.credentials,
+                           context.id_meeting, None)
+        print("Was deleted meeting id:", context.id_meeting)
