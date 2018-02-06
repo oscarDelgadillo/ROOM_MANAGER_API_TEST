@@ -9,6 +9,9 @@ global config_data
 config_data = yaml.load(
     open('test/configurations/config.yml'))
 
+global config_data_accounts
+config_data_accounts = yaml.load(open('test/configurations/accounts.yml'))
+
 
 def before_all(context):
     """This method executes actions before regression"""
@@ -37,21 +40,20 @@ def before_all(context):
     context.after_item_id = None
     context.after_credentials = None
     context.after_endpoint = None
+    context.after_method = None
+
+    context.accounts = {}
+    context.accounts['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMINISTRATOR']
+    context.accounts['__CREDENTIALS_ADMINISTRATOR'] = config_data_accounts['__CREDENTIALS_ADMINISTRATOR']
+    context.accounts['__USER_COMMON'] = config_data_accounts['__USER_COMMON']
+    context.accounts['__CREDENTIALS_COMMON'] = config_data_accounts['__CREDENTIALS_COMMON']
+    context.accounts['__USER_ROOM'] = config_data_accounts['__USER_ROOM']
 
     context.__exchange_server = config_data['__exchange_server']
     context.__hostname = config_data['__hostname']
     context.__name_server = config_data['__name_server']
     context.__type_server = config_data['__type_server']
     context.__version_server = config_data['__version_server']
-
-
-def after_step(context, step):
-    """This method executes actions after scenario"""
-
-    logger.info("Starting After Step execution...")
-    if 'I POST to /meetings' in step.name:
-        context.after_endpoint = context.endpoint
-        context.after_credentials = context.credentials
 
 
 def after_scenario(context, scenario):
@@ -67,3 +69,11 @@ def after_scenario(context, scenario):
               get_delete_request(context.base_url, context.after_endpoint, 'DELETE', context.after_credentials,
                                  context.after_item_id,
                                  None).status_code)
+
+
+def after_scenario(context, scenario):
+    """This method delete a meeting by ID """
+    if 'after_delete_meeting' in scenario.tags:
+        get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
+                           context.id_meeting, None)
+        print("Was deleted meeting id:", context.id_meeting)
