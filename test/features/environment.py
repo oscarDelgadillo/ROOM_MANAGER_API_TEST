@@ -9,6 +9,8 @@ global config_data
 config_data = yaml.load(
     open('test/configurations/config.yml'))
 
+global config_data_accounts
+config_data_accounts = yaml.load(open('test/configurations/accounts.yml'))
 
 def before_all(context):
     """This method executes actions before regression"""
@@ -37,6 +39,14 @@ def before_all(context):
     context.after_item_id = None
     context.after_credentials = None
     context.after_endpoint = None
+    context.after_method = None
+
+    context.accounts = {}
+    context.accounts['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMINISTRATOR']
+    context.accounts['__CREDENTIALS_ADMINISTRATOR'] = config_data_accounts['__CREDENTIALS_ADMINISTRATOR']
+    context.accounts['__USER_COMMON'] = config_data_accounts['__USER_COMMON']
+    context.accounts['__CREDENTIALS_COMMON'] = config_data_accounts['__CREDENTIALS_COMMON']
+    context.accounts['__USER_ROOM'] = config_data_accounts['__USER_ROOM']
 
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
@@ -54,6 +64,6 @@ def after_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     if 'afeter_delete_meeting' in scenario.tags:
-        get_delete_request(context.base_url, context.end_point, context.after_method, context.credentials,
+        get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
                            context.id_meeting, None)
         print("Was deleted meeting id:", context.id_meeting)
