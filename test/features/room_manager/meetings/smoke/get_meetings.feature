@@ -32,7 +32,7 @@ Feature: Meetings smoke test
                "attendees": [],
                "optionalAttendees": []
             }
-         """
+          """
        And I send '__CREDENTIALS_ADMINISTRATOR' as credentials
        And I send the request
        And I keep the "id" as "$id_meeting" from the previous step
