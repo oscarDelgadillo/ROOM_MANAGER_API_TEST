@@ -10,3 +10,7 @@ __hostname: at05.local
 __name_server: Exchange Server 2013
 __type_server: ExchangeServer
 __version_server: 15.0 (Build 30516.32)
+
+__user_administrator: Administrator
+__password_administrator: Password123
+__deleteLockTime: 10

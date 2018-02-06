@@ -44,6 +44,10 @@ def before_all(context):
     context.__type_server = config_data['__type_server']
     context.__version_server = config_data['__version_server']
 
+    context.__user_administrator = config_data['__user_administrator']
+    context.__password_administrator = config_data['__password_administrator']
+    context.__deleteLockTime = config_data['__deleteLockTime']
+
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
 
