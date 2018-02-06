@@ -8,10 +8,6 @@ def delete_request(base_url, end_point, credentials, params):
     uri = base_url + end_point
     headers['Credentials'] = credentials
     headers['ServiceName'] = 'ExchangeServer'
-    print("********************************10000000000")
-    print(uri)
-    print(headers)
-    print(params)
     response = requests.delete(url=uri, headers=headers, params=params)
     print(response.status_code)
     return response
@@ -37,7 +33,6 @@ def put_request(base_url, end_point, credentials, data):
     print(headers)
     print(data)
     response = requests.put(url=uri, headers=headers, json=data)
-    print("puuuuuuuuuuuuuuuuuuuuuuutaaaaaaaaaaaaaa")
     print(response.status_code)
     return response
 
@@ -114,10 +109,11 @@ def request(base_url, endpoint, method, credentials, item_id, data, params):
     print(method)
     print("****************************************")
     if method == 'DELETE':
+        print("****************************************")
         return delete_request(base_url, endpoint, credentials, data)
     elif method == 'POST':
         return post_request(base_url, endpoint, credentials, data)
-    elif method == 'PUT':#t(base_url, end_point, credentials, data):
+    elif method == 'PUT':
         return put_request(base_url,endpoint,credentials,data)
     elif method == 'GET':
         return get_delete_request(base_url, endpoint, method, credentials, item_id, params)

@@ -1,8 +1,8 @@
-__user_administrator: administrator@at05.local
-__credentials_administrator: YXQwNVxhZG1pbmlzdHJhdG9yOlBhc3N3b3JkMTIz
-__user_common: abner@at05.local
-__credentials_common: YXQwNVxhZG1pbmlzdHJhdG9yOlBhc3N3b3JkMTIz
-__user_room: room01@at05.local
-__user_marco: marco
-__user_oscar: oscar
-__common_password: Password123
+__USER_ADMINISTRATOR: administrator@at05.local
+__CREDENTIALS_ADMINISTRATOR: YXQwNVxhZG1pbmlzdHJhdG9yOlBhc3N3b3JkMTIz
+__USER_COMMON: abner@at05.local
+__CREDENTIALS_COMMON: YXQwNVxhZG1pbmlzdHJhdG9yOlBhc3N3b3JkMTIz
+__USER_ROOM: room01@at05.local
+__USER_MARCO: marco
+__USER_OSCAR: oscar
+__COMMON_PASSWORD: Password123

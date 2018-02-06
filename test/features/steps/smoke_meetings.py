@@ -1,25 +1,36 @@
-from behave import given, when
-from compare import expect
-from api_core.api_request.api_request_manager import get_delete_request
+import json
+
+from behave import step
+
+from api_core.utils.validate_parameters import validate_parameters, replace_parameters
 
 
-@given(u'I make a \'{method}\' request to \'{endpoint}\'')
-def step_impl(context, method, endpoint):
-    context.method = method
-    context.end_point = endpoint
-
-
-@when(u'I execute the request with the following infor')
+@step(u'I set the following parameters')
 def step_impl(context):
-    context.parameters = {}
+    context.params = {}
     for row in context.table:
-        context.parameters["owner"] = row["owner"]
-        context.parameters["start"] = row["start"]
-        context.credentials = row["credentials"]
-    context.response = get_delete_request(context.base_url, context.end_point, context.method, context.credentials,
-                                          None, context.parameters)
+        context.params["owner"] = validate_parameters(context, row["owner"])
+        context.params["start"] = validate_parameters(context, row["start"])
+        context.credentials = validate_parameters(context, row["credentials"])
 
 
-@then(u'I expect a response status code \'{status_code}\'')
-def step_impl(context, status_code):
-    expect(str(context.response.status_code)) == status_code
+@step(u'I set the following body')
+def step_impl(context):
+    print("")
+    context.text
+    json_text = replace_parameters(context, context.text)
+    json_text = json.loads(json_text)
+    context.data = json_text
+
+
+@step(u'I send \'{credentials}\' as credentials')
+def step_impl(context, credentials):
+    context.credentials = validate_parameters(context, credentials)
+
+
+@step(u'I keep the "id" as "$id_meeting" from the previous step')
+def step_impl(context):
+    resp_json = context.response.json()
+    context.id_meeting = resp_json["_id"]
+    context.after_method = 'DELETE'
+    print("EL id ES :", context.id_meeting)

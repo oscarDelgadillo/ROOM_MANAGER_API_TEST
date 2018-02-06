@@ -8,8 +8,6 @@ from compare import expect
 
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
-import json
-
 
 @given(u'I set the following meeting info')
 def step_impl(context):
@@ -58,9 +56,6 @@ def step_impl(context):
         context.data['service'] = ObjectId(row['service'])
         context.data['equipment'] = row['equipment']
         context.data['location'] = row['location']
-
-    # pprint(context.data)
-
     request = {'email': context.room}
     context.expected_data = get_items(context.rm_host, context.rm_db_port, context.database, 'rooms', request,
                                       context.return_data)
