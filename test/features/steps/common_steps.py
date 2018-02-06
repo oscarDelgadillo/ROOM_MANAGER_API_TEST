@@ -1,4 +1,4 @@
-from behave import when
+from behave import when, step
 
 from api_core.api_request.api_request_manager import request
 

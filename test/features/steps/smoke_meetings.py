@@ -1,6 +1,8 @@
-from behave import step
-from api_core.util.validate_parameters import validate_parameters, replace_parameters
 import json
+
+from behave import step
+
+from api_core.utils.validate_parameters import validate_parameters, replace_parameters
 
 
 @step(u'I set the following parameters')

@@ -5,4 +5,8 @@ root_path: /api
 version: /v1
 protocol: http
 data_base_rm : rmserver
-
+__exchange_server : 10.28.133.16
+__hostname: at05.local
+__name_server: Exchange Server 2013
+__type_server: ExchangeServer
+__version_server: 15.0 (Build 30516.32)

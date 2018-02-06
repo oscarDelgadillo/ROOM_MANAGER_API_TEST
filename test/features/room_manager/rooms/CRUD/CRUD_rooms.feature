@@ -4,14 +4,14 @@ Feature: Retrieve Rooms
 
   Background:
     Given I set ZnJhbmNvOlBhc3N3b3JkMTIz as credentials
-    And I set POST to /meetings
+    And I POST to /meetings
     And I set the following meeting info
       | organizer         | subject                            | body | start                    | end                      | rooms             | attendees         | optionalAttendees |
       | franco@at05.local | Create meeting to Test room status | Test | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | room01@at05.local | franco@at05.local | marco@at05.local  |
     And I send the request
 
   Scenario: Verify that is possible to retrieve free rooms
-    When I set GET to /rooms
+    When I GET to /rooms
     And I set the following params
       | from                     | to                       | status |
       | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | free   |
