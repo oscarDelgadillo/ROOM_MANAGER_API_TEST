@@ -1,5 +1,4 @@
-from behave import when
-
+from behave import step
 from api_core.api_request.api_request_manager import request
 
 
@@ -18,3 +17,8 @@ def step_impl(context, credentials):
 def step_impl(context):
     context.response = request(context.base_url, context.endpoint, context.method, context.credentials, context.item_id,
                                context.data, context.params)
+
+
+@step(u'I keep the "id" as "after_item_id" from JSON response')
+def step_impl(context):
+    context.after_item_id = context.response.json()['_id']

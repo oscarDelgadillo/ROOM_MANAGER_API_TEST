@@ -13,7 +13,7 @@ def step_impl(context):
         context.params['status'] = row['status']
 
 
-@given(u'I have obtained {schema}Id of the database')
+@given(u'I have obtained {schema} Id of the database')
 def step_impl(context, schema):
     rooms = get_items(context.rm_host, context.rm_db_port, context.database, schema, None, None)
     context.item_id = rooms[0]["_id"]
