@@ -11,31 +11,31 @@ Feature: Retrieve Rooms
     And I send the request
     And I keep the "id" as "after_item_id" from JSON response
 
-    @bug
-#  Scenario: Verify that is possible to retrieve free rooms
-#    When I set GET to /rooms
-#    And I set the following params
-#      | from                     | to                       | status |
-#      | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | free   |
-#    And I send the request
-#    Then I should get a response with status code 200
-#    And I should get an empty Json response
-
-    @bug
-  Scenario: Verify that is possible to retrieve busy rooms
-    When I set GET to /rooms
+  @bug
+  Scenario: Verify that is possible to retrieve free rooms
+    When I GET to /rooms
     And I set the following params
       | from                     | to                       | status |
       | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | free   |
     And I send the request
     Then I should get a response with status code 200
+    And I should not get rooms occupied by the meeting created
+
+  @bug
+  Scenario: Verify that is possible to retrieve busy rooms
+    When I GET to /rooms
+    And I set the following params
+      | from                     | to                       | status |
+      | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | busy   |
+    And I send the request
+    Then I should get a response with status code 200
     And The response should be equal in data base rooms schema
     And The response should have a valid rooms schema
-#
-#  Scenario: Verify that is possible to retrieve room by Id
-#    When I set GET to /rooms
-#    And I have obtained roomsId of the database
-#    And I send the request
-#    Then I should get a response with status code 200
-#    And The response should be equal in data base rooms schema
-#    And The response should have a valid rooms schema
+
+  Scenario: Verify that is possible to retrieve room by Id
+    When I GET to /rooms
+    And I have obtained rooms Id of the database
+    And I send the request
+    Then I should get a response with status code 200
+    And The response should be equal in data base rooms schema
+    And The response should have a valid rooms schema

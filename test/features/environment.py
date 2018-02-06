@@ -44,6 +44,16 @@ def before_all(context):
     context.__type_server = config_data['__type_server']
     context.__version_server = config_data['__version_server']
 
+
+def after_step(context, step):
+    """This method executes actions after scenario"""
+
+    logger.info("Starting After Step execution...")
+    if 'I POST to /meetings' in step.name:
+        context.after_endpoint = context.endpoint
+        context.after_credentials = context.credentials
+
+
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
 

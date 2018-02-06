@@ -1,5 +1,8 @@
 from behave import given, then
 from api_core.api_request.db_request_manager import get_items
+from api_core.api_request.api_request_manager import request
+from api_core.utils.compare_json import compare_json
+from api_core.utils.compare_json import json_contains
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 from compare import expect
@@ -19,6 +22,25 @@ def step_impl(context):
         context.data['optionalAttendees'] = [row['optionalAttendees']]
 
 
+@then(u'I should not get {schema} occupied by the meeting created')
+def step_impl(context, schema):
+    database_request = {}
+    context.schema = schema
+    database_request['email'] = context.data[schema][0]
+    context.request = get_items(context.rm_host, context.rm_db_port, context.database, context.schema, database_request,
+                                None)
+    db_response_data = {}
+    for doc in context.request:
+        db_response_data.update(doc)
+    context.item_id = db_response_data['_id']
+
+    context.item_response = request(context.base_url, context.endpoint, context.method,
+                                    context.credentials, context.item_id,
+                                    context.data, context.params)
+
+    expect(False).to_equal(json_contains(context.item_response.json(), context.response.json()))
+
+
 @then(u'The response should be equal in data base {schema} schema')
 def step_impl(context, schema):
     database_request = {}
@@ -29,13 +51,17 @@ def step_impl(context, schema):
     db_response_data = {}
     for doc in context.request:
         db_response_data.update(doc)
-    # expect(True).to_equal(compare_dict(db_response_data, context.response.json()[0]))
-    expect(True).to_equal(True)
+
+    try:
+        expect(True).to_equal(compare_json(db_response_data, context.response.json()[0]))
+    except KeyError:
+        expect(True).to_equal(compare_json(db_response_data, context.response.json()))
+    except IndexError:
+        expect(True).to_equal(compare_json(db_response_data, context.response.json()))
 
 
 @then(u'The response should have a valid {schema_name} schema')
 def step_impl(context, schema_name):
-    print("Validation of schema")
     rooms_schema = {
         "type": "object",
         "properties": {
@@ -46,17 +72,10 @@ def step_impl(context, schema_name):
             "code": {"type": "string"},
             "capacity": {"type": "number"},
             "roomStatus": {"type": "string"},
-            "equipment": {"type": "array",
-                          "items": {"type": ["string", "null"]}},
+            "equipment": {"type": ["string", "null"]},
             "location": {"type": ["string", "null"]}
         }
     }
-
-    print('schema type', type(rooms_schema))
-    print('json response type', type(context.response.json()[0]))
-    print('json response', context.response.json()[0])
-
-    print("Validating the input data using jsonschema:")
 
     def validate_schema(json_response, schema):
         try:
@@ -65,6 +84,9 @@ def step_impl(context, schema_name):
         except ValidationError:
             return False
 
-    print('Result', validate_schema(context.response.json()[0], rooms_schema))
-
-    expect(True).to_equal(validate_schema(context.response.json()[0], rooms_schema))
+    try:
+        expect(True).to_equal(validate_schema(context.response.json()[0], rooms_schema))
+    except KeyError:
+        expect(True).to_equal(validate_schema(context.response.json(), rooms_schema))
+    except IndexError:
+        expect(True).to_equal(validate_schema(context.response.json(), rooms_schema))
