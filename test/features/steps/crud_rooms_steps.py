@@ -3,16 +3,19 @@ from api_core.api_request.db_request_manager import get_items
 from api_core.api_request.api_request_manager import request
 from api_core.utils.compare_json import compare_json
 from api_core.utils.compare_json import json_contains
+from api_core.utils.validate_parameters import validate_parameters
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 from compare import expect
+
+import json
 
 
 @given(u'I set the following meeting info')
 def step_impl(context):
     context.data = {}
     for row in context.table:
-        context.data['organizer'] = row['organizer']
+        context.data['organizer'] = validate_parameters(context, row['organizer'])
         context.data['subject'] = row['subject']
         context.data['body'] = row['body']
         context.data['start'] = row['start']
@@ -62,20 +65,7 @@ def step_impl(context, schema):
 
 @then(u'The response should have a valid {schema_name} schema')
 def step_impl(context, schema_name):
-    rooms_schema = {
-        "type": "object",
-        "properties": {
-            "uuid": {"type": "string"},
-            "name": {"type": "string"},
-            "displayName": {"type": "string"},
-            "email": {"type": "string"},
-            "code": {"type": "string"},
-            "capacity": {"type": "number"},
-            "roomStatus": {"type": "string"},
-            "equipment": {"type": ["string", "null"]},
-            "location": {"type": ["string", "null"]}
-        }
-    }
+    context.schema_name = json.loads(open('test/schemes/' + schema_name + '.json.').read())
 
     def validate_schema(json_response, schema):
         try:
@@ -85,8 +75,8 @@ def step_impl(context, schema_name):
             return False
 
     try:
-        expect(True).to_equal(validate_schema(context.response.json()[0], rooms_schema))
+        expect(True).to_equal(validate_schema(context.response.json()[0], context.schema_name))
     except KeyError:
-        expect(True).to_equal(validate_schema(context.response.json(), rooms_schema))
+        expect(True).to_equal(validate_schema(context.response.json(), context.schema_name))
     except IndexError:
-        expect(True).to_equal(validate_schema(context.response.json(), rooms_schema))
+        expect(True).to_equal(validate_schema(context.response.json(), context.schema_name))
