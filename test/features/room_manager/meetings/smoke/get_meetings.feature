@@ -14,7 +14,7 @@ Feature: Meetings smoke test
     Then I should get a response with status code 200
 
 
-  @meetings @afeter_delete_meeting
+  @meetings @after_delete_meeting
   Scenario: Get Meetings by Id from Room Manager
 
     Given I POST to /meetings
