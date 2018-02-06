@@ -1,6 +1,6 @@
 import yaml
 import logging
-from api_core.api_request.api_request_manager import get_delete_request
+from api_core.api_request.api_request_manager import get_delete_request, delete_request
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -9,6 +9,8 @@ global config_data
 config_data = yaml.load(
     open('test/configurations/config.yml'))
 
+global config_data_accounts
+config_data_accounts = yaml.load(open('test/configurations/accounts.yml'))
 
 def before_all(context):
     """This method executes actions before regression"""
@@ -38,20 +40,30 @@ def before_all(context):
     context.after_credentials = None
     context.after_endpoint = None
 
+    context.__exchange_server = config_data['__exchange_server']
+    context.__hostname = config_data['__hostname']
+    context.__name_server = config_data['__name_server']
+    context.__type_server = config_data['__type_server']
+    context.__version_server = config_data['__version_server']
+    context.__deleteLockTime = config_data['__deleteLockTime']
 
 
+    context.accounts = {}
+    context.accounts['__user_administrator'] = config_data_accounts['__user_administrator']
+    context.accounts['__credentials_administrator'] = config_data_accounts['__credentials_administrator']
+    context.accounts['__user_common'] = config_data_accounts['__user_common']
+    context.accounts['__credentials_common'] = config_data_accounts['__credentials_common']
+    context.accounts['__user_room'] = config_data_accounts['__user_room']
+
+    context.accounts['__user_marco'] = config_data_accounts['__user_marco']
+    context.accounts['__user_oscar'] = config_data_accounts['__user_oscar']
+    context.accounts['__common_password'] = config_data_accounts['__common_password']
 
 
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
-    if 'after_delete_service' in scenario.tags:
-        print("aaaaaaaaaaaaaaaaaaaaafter")
-        print(context.base_url)
-        print(context.endpoint)
-        print(context.credentials)
-        print(context.item_id)
-        print(context.params)
-        get_delete_request(context.base_url, context.endpoint,"DELETE", context.credentials, context.item_id, context.params)
+    if 'after_delete_servicess' in scenario.tags:#def delete_request(base_url, end_point, credentials, params):
+        delete_request(context.base_url, context.endpoint, context.credentials,context.params)
 
     logger.info("Starting After Scenario execution...")
     if 'Verify that is possible to retrieve free rooms' or 'Verify that is possible to retrieve busy rooms' in scenario.name:

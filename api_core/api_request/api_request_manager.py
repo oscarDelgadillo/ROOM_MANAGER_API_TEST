@@ -1,20 +1,81 @@
 # Module: api_request_manager
 import requests
 
+headers = {'Accept': 'application/json'}
+
+
+def delete_request(base_url, end_point, credentials, params):
+    uri = base_url + end_point
+    headers['Credentials'] = credentials
+    headers['ServiceName'] = 'ExchangeServer'
+    print("********************************10000000000")
+    print(uri)
+    print(headers)
+    print(params)
+    response = requests.delete(url=uri, headers=headers, params=params)
+    print(response.status_code)
+    return response
+
+def post_request(base_url, end_point, credentials, data):
+    uri = base_url + end_point
+    headers = {'Accept': 'application/json'}
+    headers['Credentials'] = credentials
+    headers['ServiceName'] = 'ExchangeServer'
+    print(uri)
+    print(headers)
+    print(data)
+    response = requests.post(url=uri, headers=headers, json=data)
+    return response
+
+def put_request(base_url, end_point, credentials, data):
+    print("********************************puuuuuuuuuuuuuuuut")
+    uri = base_url + end_point
+    headers = {'Accept': 'application/json'}
+    headers['Credentials'] = credentials
+    headers['ServiceName'] = 'ExchangeServer'
+    print(uri)
+    print(headers)
+    print(data)
+    response = requests.put(url=uri, headers=headers, json=data)
+    print("puuuuuuuuuuuuuuuuuuuuuuutaaaaaaaaaaaaaa")
+    print(response.status_code)
+    return response
+
+def get_request(base_url, end_point, credentials, param):
+    uri = base_url + end_point
+    headers = {'Accept': 'application/json'}
+    headers['Credentials'] = credentials
+    response = requests.get(url=uri, headers=headers, params=param)
+    return response
+
+
+
+
+
+
+
+
+
 
 def get_delete_request(base_url, end_point, method, credentials, item_id, params):
     """This method performs GET or DELETE request"""
     headers = {'Accept': 'application/json'}
+
+    print("holaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
     response = None
     uri = base_url + end_point
     if item_id is not None:
         headers['Credentials'] = credentials
         headers['ServiceName'] = 'ExchangeServer'
-        uri = "{}/{}".format(uri, item_id)
+        #  uri = "{}/{}".format(uri, item_id)
         if method == 'GET':
             response = requests.get(url=uri, headers=headers, params=params)
         elif method == 'DELETE':
-            response = requests.delete(url=uri, headers=headers)
+            print("********************************10000000000")
+            print(uri)
+            print(headers)
+            print(params)
+            response = requests.delete(url=uri, headers=headers, params=params)
     elif method == 'GET':
         if credentials is not None:
             headers['Credentials'] = credentials
@@ -33,20 +94,31 @@ def post_put_request(base_url, end_point, method, credentials, item_id, data):
     headers['Credentials'] = credentials
     if item_id is not None:
         headers['ServiceName'] = 'ExchangeServer'
-        uri = "{}/{}".format(uri, item_id)
+        # uri = "{}/{}".format(uri, item_id)
         if method == 'POST':
+            print("********************************111")
             response = requests.post(url=uri, headers=headers, json=data)
         elif method == 'PUT':
+            print("********************************33")
             response = requests.put(url=uri, headers=headers, json=data)
             print(response.status_code)
     elif method == 'POST':
+        print("********************************2222")
         response = requests.post(url=uri, headers=headers, json=data)
 
     return response
 
 
 def request(base_url, endpoint, method, credentials, item_id, data, params):
-    if method == 'GET' or method == 'DELETE':
+    print("*******************222****************")
+    print(method)
+    print("****************************************")
+    if method == 'DELETE':
+        return delete_request(base_url, endpoint, credentials, data)
+    elif method == 'POST':
+        return post_request(base_url, endpoint, credentials, data)
+    elif method == 'PUT':#t(base_url, end_point, credentials, data):
+        return put_request(base_url,endpoint,credentials,data)
+    elif method == 'GET':
         return get_delete_request(base_url, endpoint, method, credentials, item_id, params)
-    elif method == 'POST' or method == 'PUT':
-        return post_put_request(base_url, endpoint, method, credentials, item_id, data)
+
