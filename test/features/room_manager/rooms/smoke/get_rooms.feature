@@ -1,9 +1,8 @@
 @smoke
-Feature: Rooms smoke test
-  Validate service retrieving Rooms
+Feature: Validate Rooms service availability
+  Test /rooms endpoint service availability
 
-  Scenario: Get Rooms from Server
-    Given I have rooms created
+  Scenario: Verify retrieving of Rooms
     When I set GET to /rooms
       And I set the following params
       | from                     | to                       | status |
