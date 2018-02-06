@@ -1,9 +1,9 @@
-from behave import when
+from behave import when, step
 
 from api_core.api_request.api_request_manager import request
 
 
-@step(u'I set {method} to {endpoint}')
+@step(u'I {method} to {endpoint}')
 def step_impl(context, method, endpoint):
     context.method = method
     context.endpoint = endpoint
