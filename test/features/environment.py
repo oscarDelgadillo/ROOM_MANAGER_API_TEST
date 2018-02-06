@@ -22,3 +22,9 @@ def before_all(context):
     context.params = None
     context.credentials = None
     context.item_id = None
+
+    context.__exchange_server = config_data['__exchange_server']
+    context.__hostname = config_data['__hostname']
+    context.__name_server = config_data['__name_server']
+    context.__type_server = config_data['__type_server']
+    context.__version_server = config_data['__version_server']
