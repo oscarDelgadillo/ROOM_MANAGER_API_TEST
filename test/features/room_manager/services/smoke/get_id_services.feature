@@ -2,7 +2,7 @@
 Feature: Services Id smoke test
   Validate service retrieving Services
 
-  Scenario: Get Room Manager Services Id
+  Scenario: Get Room Manager Services by Id
     Given I GET to /services
     When I set the hostname of the server "__exchange_server"
       And I send the request
