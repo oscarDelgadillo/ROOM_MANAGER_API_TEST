@@ -23,4 +23,3 @@ def step_impl(context, credentials):
 def step_impl(context):
     context.response = request(context.base_url, context.endpoint, context.method, context.credentials, context.item_id,
                                context.data, context.params)
-    print(context.response.status_code,"*******************")

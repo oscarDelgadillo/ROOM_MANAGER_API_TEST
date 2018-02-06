@@ -38,8 +38,20 @@ def before_all(context):
     context.after_credentials = None
     context.after_endpoint = None
 
+
+
+
+
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
+    if 'after_delete_service' in scenario.tags:
+        print("aaaaaaaaaaaaaaaaaaaaafter")
+        print(context.base_url)
+        print(context.endpoint)
+        print(context.credentials)
+        print(context.item_id)
+        print(context.params)
+        get_delete_request(context.base_url, context.endpoint,"DELETE", context.credentials, context.item_id, context.params)
 
     logger.info("Starting After Scenario execution...")
     if 'Verify that is possible to retrieve free rooms' or 'Verify that is possible to retrieve busy rooms' in scenario.name:
