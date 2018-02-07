@@ -7,14 +7,13 @@ Feature: Meetings smoke test
   Scenario: Get Meetings from Room Manager
 
     Given I GET to /meetings
-    When I set the following parameters
+    When I set the following parameters for a meeting
         | owner                | start                    | credentials                 |
         | __USER_ADMINISTRATOR | 2017-04-21T20:00:00.000Z | __CREDENTIALS_ADMINISTRATOR |
       And I send the request
     Then I should get a response with status code 200
 
-
-  @meetings @after_delete_meeting
+  @after_delete_item
   Scenario: Get Meetings by Id from Room Manager
 
     Given I POST to /meetings
@@ -37,7 +36,7 @@ Feature: Meetings smoke test
        And I send the request
        And I keep the "id" as "$id_meeting" from the previous step
     When I GET to /meetings
-      And I set the following parameters
+      And I set the following parameters for a meeting
         | owner                | start                    | credentials                 |
         | __USER_ADMINISTRATOR | 2017-04-21T20:00:00.000Z | __CREDENTIALS_ADMINISTRATOR |
       And I send the request

@@ -89,10 +89,10 @@ def after_scenario(context, scenario):
                                  None).status_code)
 
     # """This method delete a meeting by ID """
-    if 'after_delete_meeting' in scenario.tags:
+    if 'after_delete_item' in scenario.tags:
         get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
-                           context.id_meeting, None)
-        print("Was deleted meeting id:", context.id_meeting)
+                           context.item_id, None)
+        print("Was deleted meeting id:", context.item_id)
 
     if 'after_delete_service' in scenario.tags:
         print(request(context.base_url, context.endpoint, "DELETE", context.credentials,
