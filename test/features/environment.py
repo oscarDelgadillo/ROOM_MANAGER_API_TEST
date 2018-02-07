@@ -45,6 +45,7 @@ def before_all(context):
     context.after_endpoint = None
     context.after_method = None
     context.item_ids = {}
+    context.responses={}
 
 
 
@@ -64,8 +65,8 @@ def before_all(context):
     context.services = {}
     context.services['__TYPE_SERVER'] = config_data_services['__TYPE_SERVER']
     context.services['__HOSTNAME'] = config_data_services['__HOSTNAME']
-    context.services['__USER_ADMINISTRATOR'] = config_data_services['__USER_ADMINISTRATOR']
-    context.services['__PASSWORD_ADMINISTRATOR'] = config_data_services['__PASSWORD_ADMINISTRATOR']
+    context.services['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMIN']
+    context.services['__PASSWORD_ADMINISTRATOR'] = config_data_accounts['__PASSWORD_ADMIN']
     context.services['__DELETE_LOCK_TIME'] = config_data_services['__DELETE_LOCK_TIME']
 
     context.services['__EXCHANGE_SERVER'] = config_data_services['__EXCHANGE_SERVER']
@@ -85,7 +86,7 @@ def after_scenario(context, scenario):
 
     logger.info("Starting After Scenario execution...")
 
-    if 'tag1' in scenario.tags:
+    if 'delete_item' in scenario.tags:
         print("After Meeting _id:", context.after_item_id)
         print("After Credentials:", context.after_credentials)
         print("Endpoint:", context.after_endpoint)
@@ -97,7 +98,7 @@ def after_scenario(context, scenario):
 
     # """This method delete a meeting by ID """
     if 'after_delete_item' in scenario.tags:
-        get_delete_request(context.base_url, context.endpoint, "DELETE", context.credentials, context.item_id, None)
+        get_delete_request(context.base_url, context.endpoint, "DELETE", context.credentials, context.after_item_id, None)
         # request(context.base_url, context.endpoint+'/'+context.item_id, "DELETE", context.credentials, context.item_id, None, None)
         print("Was deleted meeting id:", context.item_id)
 

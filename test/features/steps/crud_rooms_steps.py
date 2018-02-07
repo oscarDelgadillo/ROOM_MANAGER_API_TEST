@@ -1,82 +1,42 @@
-from behave import given, then
+# CRUD test: get rooms
+from behave import then
+from api_core.api_request.db_request_manager import to_json
 from api_core.api_request.db_request_manager import get_items
 from api_core.api_request.api_request_manager import request
-from api_core.utils.compare_json import compare_json
+from api_core.utils.compare_json import compare_json, extract_item
 from api_core.utils.compare_json import json_contains
-from api_core.utils.validate_parameters import validate_parameters
-from jsonschema import validate
-from jsonschema.exceptions import ValidationError
+from api_core.utils.validate_schemes_json import validate_schema
 from compare import expect
 
-import json
 
-
-@given(u'I set the following meeting info')
-def step_impl(context):
-    context.data = {}
-    for row in context.table:
-        context.data['organizer'] = validate_parameters(context, row['organizer'])
-        context.data['subject'] = row['subject']
-        context.data['body'] = row['body']
-        context.data['start'] = row['start']
-        context.data['end'] = row['end']
-        context.data['rooms'] = [row['rooms']]
-        context.data['attendees'] = [row['attendees']]
-        context.data['optionalAttendees'] = [row['optionalAttendees']]
-
-
-@then(u'I should not get {schema} occupied by the meeting created')
-def step_impl(context, schema):
+@then(u'I should get a collection with only free {collection}')
+def step_impl(context, collection):
     database_request = {}
-    context.schema = schema
-    database_request['email'] = context.data[schema][0]
-    context.request = get_items(context.rm_host, context.rm_db_port, context.database, context.schema, database_request,
+    database_request['email'] = context.data[collection][0]
+
+    context.request = get_items(context.rm_host, context.rm_db_port, context.database, collection,
+                                database_request,
                                 None)
-    db_response_data = {}
-    for doc in context.request:
-        db_response_data.update(doc)
-    context.item_id = db_response_data['_id']
+    context.item_id = context.request[0]['_id']  # Should disappear
+    item_response = request(context.base_url, context.endpoint, context.method,
+                            context.credentials, context.item_id,
+                            context.data, context.params)
 
-    context.item_response = request(context.base_url, context.endpoint, context.method,
-                                    context.credentials, context.item_id,
-                                    context.data, context.params)
-
-    expect(False).to_equal(json_contains(context.item_response.json(), context.response.json()))
+    expect(False).to_equal(json_contains(item_response.json(), context.response.json()))
 
 
-@then(u'The response should be equal in data base {schema} schema')
-def step_impl(context, schema):
+@then(u'The response should be equal in data base {collection} collection')
+def step_impl(context, collection):
     database_request = {}
-    context.schema = schema
-    database_request['email'] = context.data[schema][0]
-    context.request = get_items(context.rm_host, context.rm_db_port, context.database, context.schema, database_request,
-                                None)
-    db_response_data = {}
-    for doc in context.request:
-        db_response_data.update(doc)
+    database_request['email'] = context.data[collection][0]
 
-    try:
-        expect(True).to_equal(compare_json(db_response_data, context.response.json()[0]))
-    except KeyError:
-        expect(True).to_equal(compare_json(db_response_data, context.response.json()))
-    except IndexError:
-        expect(True).to_equal(compare_json(db_response_data, context.response.json()))
+    context.request = get_items(context.rm_host, context.rm_db_port, context.database, collection,
+                                database_request,
+                                None)
+
+    expect(True).to_equal(compare_json(to_json(context.request), extract_item(context.response.json())))
 
 
 @then(u'The response should have a valid {schema_name} schema')
 def step_impl(context, schema_name):
-    context.schema_name = json.loads(open('test/schemes/' + schema_name + '.json.').read())
-
-    def validate_schema(json_response, schema):
-        try:
-            validate(json_response, schema)
-            return True
-        except ValidationError:
-            return False
-
-    try:
-        expect(True).to_equal(validate_schema(context.response.json()[0], context.schema_name))
-    except KeyError:
-        expect(True).to_equal(validate_schema(context.response.json(), context.schema_name))
-    except IndexError:
-        expect(True).to_equal(validate_schema(context.response.json(), context.schema_name))
+    expect(True).to_equal(validate_schema(extract_item(context.response.json()), schema_name))

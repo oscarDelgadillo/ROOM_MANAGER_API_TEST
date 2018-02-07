@@ -9,7 +9,6 @@ def delete_request(base_url, end_point, credentials, params):
     headers['Credentials'] = credentials
     headers['ServiceName'] = 'ExchangeServer'
     response = requests.delete(url=uri, headers=headers, params=params)
-    print(response.status_code)
     return response
 
 
@@ -18,9 +17,6 @@ def post_request(base_url, end_point, credentials, data):
     headers = {'Accept': 'application/json'}
     headers['Credentials'] = credentials
     headers['ServiceName'] = 'ExchangeServer'
-    print(uri)
-    print(headers)
-    print(data)
     response = requests.post(url=uri, headers=headers, json=data)
     return response
 
@@ -87,7 +83,6 @@ def post_put_request(base_url, end_point, method, credentials, item_id, data):
             response = requests.post(url=uri, headers=headers, json=data)
         elif method == 'PUT':
             response = requests.put(url=uri, headers=headers, json=data)
-            print(response.status_code)
     elif method == 'POST':
         response = requests.post(url=uri, headers=headers, json=data)
     return response
