@@ -14,7 +14,7 @@ def step_impl(context):
     print("EL id ES :", context.id_meeting)
 
 
-@step(u'I send the request extra')
+@step(u'I send the request delete')
 def step_impl(context):
     context.resp = get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
                                       context.id_meeting, None)

@@ -25,7 +25,7 @@ Feature: DELETE /meetings/{meetingId}
   Scenario: Delete an existing meeting
 
     When I DELETE to /meetings
-      And I send the request extra
+      And I send the request delete
       And I construct a expected response
     Then I should get a response with status code 200 extra
       And the built expected response should be equal to the obtained response
