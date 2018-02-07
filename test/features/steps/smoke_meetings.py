@@ -8,22 +8,22 @@ from api_core.utils.validate_parameters import validate_parameters, replace_para
 def step_impl(context):
     context.params = {}
     for row in context.table:
-        context.params["owner"] = validate_parameters(context.accounts, row["owner"])
-        context.params["start"] = validate_parameters(context.accounts, row["start"])
-        context.credentials = validate_parameters(context.accounts, row["credentials"])
+        context.params["owner"] = validate_parameters(context, row["owner"])
+        context.params["start"] = validate_parameters(context, row["start"])
+        context.credentials = validate_parameters(context, row["credentials"])
 
 
 @step(u'I set the following body')
 def step_impl(context):
 
-    json_text = replace_parameters(context.accounts, context.text)
+    json_text = replace_parameters(context, context.text)
     json_text = json.loads(json_text)
     context.data = json_text
 
 
 @step(u'I send \'{credentials}\' as credentials')
 def step_impl(context, credentials):
-    context.credentials = validate_parameters(context.accounts, credentials)
+    context.credentials = validate_parameters(context, credentials)
 
 
 @step(u'I keep the "id" as "$id_meeting" from the previous step')
