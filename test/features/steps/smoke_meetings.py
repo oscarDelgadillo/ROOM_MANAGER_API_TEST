@@ -31,5 +31,5 @@ def step_impl(context):
     resp_json = context.response.json()
     context.item_id = resp_json["_id"]
     context.id_meeting = resp_json["_id"]
-    context.after_method = 'DELETE'
+    # context.after_method = 'DELETE'
     print("EL id ES :", context.id_meeting)
