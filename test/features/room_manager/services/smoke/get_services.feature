@@ -6,6 +6,6 @@ Feature: Services smoke test
     Given I GET to /services
     When I set the following params :
       | hostname   | name          | type          | version          |
-      | __hostname | __name_server | __type_server | __version_server |
+      | __HOSTNAME | __NAME_SERVER | __TYPE_SERVER | __VERSION_SERVER |
     And I send the request
     Then I should get a response with status code 200
