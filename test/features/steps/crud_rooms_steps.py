@@ -1,13 +1,13 @@
 from behave import given, then
-from api_core.api_request.api_request_manager import post_put_request
 from api_core.api_request.db_request_manager import get_items
-from bson.objectid import ObjectId
-
-from pprint import pprint
-from compare import expect
-
+from api_core.api_request.api_request_manager import request
+from api_core.utils.compare_json import compare_json
+from api_core.utils.compare_json import json_contains
+from api_core.utils.validate_parameters import validate_parameters
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
+from compare import expect
+
 import json
 
 
@@ -15,7 +15,7 @@ import json
 def step_impl(context):
     context.data = {}
     for row in context.table:
-        context.data['organizer'] = row['organizer']
+        context.data['organizer'] = validate_parameters(context, row['organizer'])
         context.data['subject'] = row['subject']
         context.data['body'] = row['body']
         context.data['start'] = row['start']
@@ -25,84 +25,58 @@ def step_impl(context):
         context.data['optionalAttendees'] = [row['optionalAttendees']]
 
 
+@then(u'I should not get {schema} occupied by the meeting created')
+def step_impl(context, schema):
+    database_request = {}
+    context.schema = schema
+    database_request['email'] = context.data[schema][0]
+    context.request = get_items(context.rm_host, context.rm_db_port, context.database, context.schema, database_request,
+                                None)
+    db_response_data = {}
+    for doc in context.request:
+        db_response_data.update(doc)
+    context.item_id = db_response_data['_id']
 
-@given(u'I have a meeting {method} to {endpoint} with the following info')
-def step_impl(context, endpoint, method):
-    context.after_endpoint = context.endpoint
+    context.item_response = request(context.base_url, context.endpoint, context.method,
+                                    context.credentials, context.item_id,
+                                    context.data, context.params)
 
-    # Creating meeting
-    context.response = post_put_request(context.base_url, context.endpoint, context.method, context.credentials, None,
-                                        context.data)
-    print("POST Response Status Code:", context.response.status_code)
-    print(type(context.response.json()))
-
-    context.after_item_id = context.response.json()["_id"]
-    context.after_credentials = context.credentials
-    context.credentials = None
-
-    # Getting room from database
-    context.room = context.response.json()['rooms'][0]
-    print("Rooms:", context.room)
-
-
-@then(u'I should get a Json response with the following info')
-def step_impl(context):
-    print("Validation of data")
-    context.data = {}
-    for row in context.table:
-        context.data['name'] = row['name']
-        context.data['displayName'] = row['displayName']
-        context.data['email'] = row['email']
-        context.data['code'] = row['code']
-        context.data['capacity'] = int(row['capacity'])
-        context.data['service'] = ObjectId(row['service'])
-        context.data['equipment'] = row['equipment']
-        context.data['location'] = row['location']
-
-    # pprint(context.data)
-
-    request = {'email': context.room}
-    context.expected_data = get_items(context.rm_host, context.rm_db_port, context.database, 'rooms', request,
-                                      context.return_data)
-
-    print("Result of query = Room:")
-    print(type(context.expected_data))
-    for doc in context.expected_data:
-        pprint(doc)
-
-        # Todo Add Validation of Json Data
-
-        # expect('10').to_equal(1)
+    expect(False).to_equal(json_contains(context.item_response.json(), context.response.json()))
 
 
-@then(u'I should get a Json response with the following schema')
-def step_impl(context):
-    print("Validation of schema")
-    schema = {
-        'type': 'array',
-        'properties': {
-            'uuid': {'type': 'string'},
-            'name': {'type': 'string'},
-            'displayName': {'type': 'string'},
-            'email': {'type': 'string'},
-            'code': {'type': 'string'},
-            'capacity': {'type': 'number'},
-            'roomStatus': {'type': 'string'},
-            'equipment': {'type': 'array',
-                          'items': {'type': 'string'}},
-            'location': {'type': 'string'}
-        }
-    }
+@then(u'The response should be equal in data base {schema} schema')
+def step_impl(context, schema):
+    database_request = {}
+    context.schema = schema
+    database_request['email'] = context.data[schema][0]
+    context.request = get_items(context.rm_host, context.rm_db_port, context.database, context.schema, database_request,
+                                None)
+    db_response_data = {}
+    for doc in context.request:
+        db_response_data.update(doc)
 
-    print(type(schema))
-
-    print("Validating the input data using jsonschema:")
     try:
-        print('Entering in Try')
-        validate(context.expected_data, schema)
-        print('True')
-    except ValidationError:
-        print('Entering in except')
-        print('False')
+        expect(True).to_equal(compare_json(db_response_data, context.response.json()[0]))
+    except KeyError:
+        expect(True).to_equal(compare_json(db_response_data, context.response.json()))
+    except IndexError:
+        expect(True).to_equal(compare_json(db_response_data, context.response.json()))
 
-    expect('10').to_equal(1)
+
+@then(u'The response should have a valid {schema_name} schema')
+def step_impl(context, schema_name):
+    context.schema_name = json.loads(open('test/schemes/' + schema_name + '.json.').read())
+
+    def validate_schema(json_response, schema):
+        try:
+            validate(json_response, schema)
+            return True
+        except ValidationError:
+            return False
+
+    try:
+        expect(True).to_equal(validate_schema(context.response.json()[0], context.schema_name))
+    except KeyError:
+        expect(True).to_equal(validate_schema(context.response.json(), context.schema_name))
+    except IndexError:
+        expect(True).to_equal(validate_schema(context.response.json(), context.schema_name))
