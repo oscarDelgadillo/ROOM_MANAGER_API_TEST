@@ -4,7 +4,8 @@ Feature: Services Id smoke test
 
   Scenario: Get Room Manager Services by Id
     Given I GET to /services
-    When I set the hostname of the server "__exchange_server"
+     And I send the request
+    When I set the hostname of the server "__EXCHANGE_SERVER"
       And I send the request
     Then I should get a response with status code 200
 

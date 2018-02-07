@@ -4,8 +4,7 @@ from behave import step
 
 from api_core.utils.validate_parameters import validate_parameters, replace_parameters
 
-
-@step(u'I set the following parameters')
+@step(u'I set the following parameters for a meeting')
 def step_impl(context):
     context.params = {}
     for row in context.table:
@@ -16,8 +15,7 @@ def step_impl(context):
 
 @step(u'I set the following body')
 def step_impl(context):
-    print("")
-    context.text
+
     json_text = replace_parameters(context, context.text)
     json_text = json.loads(json_text)
     context.data = json_text
@@ -31,6 +29,7 @@ def step_impl(context, credentials):
 @step(u'I keep the "id" as "$id_meeting" from the previous step')
 def step_impl(context):
     resp_json = context.response.json()
+    context.item_id = resp_json["_id"]
     context.id_meeting = resp_json["_id"]
     context.after_method = 'DELETE'
     print("EL id ES :", context.id_meeting)
