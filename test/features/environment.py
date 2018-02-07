@@ -2,7 +2,6 @@ import yaml
 import logging
 from api_core.api_request.api_request_manager import get_delete_request, delete_request, request
 
-
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
@@ -42,6 +41,7 @@ def before_all(context):
     context.after_credentials = None
     context.after_endpoint = None
     context.after_method = None
+    context.item_ids = {}
 
     context.environment_variables = {}
     context.environment_variables['__EXCHANGE_SERVER'] = config_data['__EXCHANGE_SERVER']
@@ -65,13 +65,6 @@ def before_all(context):
 
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
-    if 'after_delete_service' in scenario.tags:
-         from test.features.steps.common_steps import general_endpoint
-         general_endpoint(context,"DELETE","/services/__ServId")
-         request(context.base_url, context.endpoint, 'DELETE', context.credentials,
-                                   context.item_id,
-                                   context.data, context.params)
-
 
     logger.info("Starting After Scenario execution...")
     if 'Verify that is possible to retrieve free rooms' or 'Verify that is possible to retrieve busy rooms' in scenario.name:
@@ -90,3 +83,8 @@ def after_scenario(context, scenario):
         get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
                            context.id_meeting, None)
         print("Was deleted meeting id:", context.id_meeting)
+
+    if 'after_delete_service' in scenario.tags:
+        print(request(context.base_url, context.endpoint, "DELETE", context.credentials,
+                      context.item_id,
+                      context.data, context.params).status_code)

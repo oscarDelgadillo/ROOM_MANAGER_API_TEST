@@ -9,6 +9,7 @@ from compare import expect
 from jsonschema import validate
 from jsonschema.exceptions import ValidationError
 
+
 @given(u'I set the following meeting info')
 def step_impl(context):
     context.data = {}
@@ -21,7 +22,6 @@ def step_impl(context):
         context.data['rooms'] = [row['rooms']]
         context.data['attendees'] = [row['attendees']]
         context.data['optionalAttendees'] = [row['optionalAttendees']]
-
 
 
 @given(u'I have a meeting {method} to {endpoint} with the following info')

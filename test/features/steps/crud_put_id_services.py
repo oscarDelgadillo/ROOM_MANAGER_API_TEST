@@ -12,5 +12,3 @@ def step_impl(context):
         params['deleteLockTime'] = context.environment_variables['__DELETE_LOCK_TIME']
     context.data = params
     context.credentials = None
-
-
