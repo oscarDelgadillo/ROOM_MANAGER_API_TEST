@@ -47,6 +47,10 @@ def before_all(context):
     context.accounts['__CREDENTIALS_ADMINISTRATOR'] = config_data_accounts['__CREDENTIALS_ADMINISTRATOR']
     context.accounts['__USER_COMMON'] = config_data_accounts['__USER_COMMON']
     context.accounts['__CREDENTIALS_COMMON'] = config_data_accounts['__CREDENTIALS_COMMON']
+    context.accounts['__USER_COMMON_1'] = config_data_accounts['__USER_COMMON_1']
+    context.accounts['__CREDENTIALS_COMMON_1'] = config_data_accounts['__CREDENTIALS_COMMON_1']
+    context.accounts['__USER_COMMON_2'] = config_data_accounts['__USER_COMMON_2']
+    context.accounts['__CREDENTIALS_COMMON_2'] = config_data_accounts['__CREDENTIALS_COMMON_2']
     context.accounts['__USER_ROOM'] = config_data_accounts['__USER_ROOM']
 
     context.__exchange_server = config_data['__exchange_server']
@@ -72,7 +76,7 @@ def after_scenario(context, scenario):
 
 def after_scenario(context, scenario):
     """This method delete a meeting by ID """
-    if 'after_delete_meeting' in scenario.tags:
+    if 'after_delete_item' in scenario.tags:
         get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
-                           context.id_meeting, None)
-        print("Was deleted meeting id:", context.id_meeting)
+                           context.item_id, None)
+        print("Was deleted item id:", context.item_id)
