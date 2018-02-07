@@ -4,18 +4,9 @@ from api_core.api_request.api_request_manager import get_delete_request
 from api_core.api_request.db_request_manager import get_items
 
 
-@when(u'I set the following params')
-def step_impl(context):
-    context.params = {}
-    for row in context.table:
-        context.params['from'] = row['from']
-        context.params['to'] = row['to']
-        context.params['status'] = row['status']
-
-
-@step(u'I have obtained {schema} Id of the database')
-def step_impl(context, schema):
-    item_request = get_items(context.rm_host, context.rm_db_port, context.database, schema, None, None)
+@step(u'I have obtained {collection} Id of the database')
+def step_impl(context, collection):
+    item_request = get_items(context.rm_host, context.rm_db_port, context.database, collection, None, None)
     context.item_id = item_request[0]["_id"]
 
 
