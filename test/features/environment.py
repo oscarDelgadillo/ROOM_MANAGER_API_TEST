@@ -87,7 +87,7 @@ def after_scenario(context, scenario):
 
     logger.info("Starting After Scenario execution...")
 
-    if 'tag1' in scenario.tags:
+    if 'delete_item' in scenario.tags:
         print("After Meeting _id:", context.after_item_id)
         print("After Credentials:", context.after_credentials)
         print("Endpoint:", context.after_endpoint)

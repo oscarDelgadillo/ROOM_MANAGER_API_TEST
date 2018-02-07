@@ -11,7 +11,7 @@ Feature: Retrieve Rooms
       And I send the request
       And I keep the "id" as "after_item_id" from JSON response
 
-  @bug @tag1
+  @bug @delete_item
   Scenario: Verify that is possible to retrieve free rooms
     When I GET to /rooms
       And I set the following params
@@ -21,7 +21,7 @@ Feature: Retrieve Rooms
     Then I should get a response with status code 200
       And I should get a collection with only free rooms
 
-  @bug @tag1
+  @bug @delete_item
   Scenario: Verify that is possible to retrieve busy rooms
     When I GET to /rooms
       And I set the following params
@@ -32,7 +32,7 @@ Feature: Retrieve Rooms
       And The response should be equal in data base rooms collection
       And The response should have a valid schema_room schema
 
-  @tag1
+  @delete_item
   Scenario: Verify that is possible to retrieve room by Id
     When I GET to /rooms
       And I have obtained rooms Id of the database
