@@ -1,4 +1,4 @@
-from behave import when, then, given
+from behave import when, then, given, step
 from compare import expect
 from api_core.api_request.api_request_manager import get_delete_request
 from api_core.utils.compare_json import compare_json
@@ -18,10 +18,27 @@ def step_impl(context):
 
 @then(u'The response should be saved in database in services schema')
 def step_impl(context):
-    context.item_id = context.response.json()['_id']
-    context.data['_id'] = context.item_id
-    item = get_delete_request(context.base_url, context.endpoint, 'GET', None, context.item_id, context.params)
+    context.after_item_id = context.response.json()['_id']
+    context.data['_id'] = context.after_item_id
+    item = get_delete_request(context.base_url, context.endpoint, 'GET', None, context.after_item_id, context.params)
     expect(compare_json(context.response.json(), item.json())).to_be_truthy()
+
+
+@step(u'I keep the response as "{new_response}" from the previous step')
+def step_impl(context, new_response):
+    context.responses[new_response] = context.response
+
+
+@then(u'I should be equal "{first_response}" and "{second_response}"')
+def step_impl(context, first_response, second_response):
+    expect(compare_json(context.responses[first_response].json(), context.responses[second_response].json())).to_be_truthy()
+
+
+
+
+
+
+
 
 
 @given(u'I have a service created with the following information')
