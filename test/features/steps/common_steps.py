@@ -5,11 +5,15 @@ from api_core.api_request.api_request_manager import request
 @step(u'I {method} to {endpoint}')
 def step_impl(context, method, endpoint):
     context.method = method
+    print("carajooooooooooo")
     aux_endpoint = str(endpoint).split('/')
+    print(aux_endpoint)
     if aux_endpoint.__len__() == 3:
         context.endpoint = '/{}/{}'.format(aux_endpoint[1], context.item_ids[aux_endpoint[2]])
+        print("ayuditaaaaaaaaaaaaaaaaa",context.endpoint)
         return
     context.endpoint = endpoint
+    print("Ayuditaaaaaaaaaaa",context.endpoint)
 
 
 @step(u'I set {credentials} as credentials')

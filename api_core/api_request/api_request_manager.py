@@ -50,7 +50,7 @@ def get_delete_request(base_url, end_point, method, credentials, item_id, params
     if item_id is not None:
         headers['Credentials'] = credentials
         headers['ServiceName'] = 'ExchangeServer'
-        #  uri = "{}/{}".format(uri, item_id)
+        uri = "{}/{}".format(uri, item_id)
         if method == 'GET':
             response = requests.get(url=uri, headers=headers, params=params)
         elif method == 'DELETE':
