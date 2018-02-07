@@ -24,7 +24,6 @@ def step_impl(context):
                                context.data, context.params)
     context.status_code = context.response.status_code
 
-
 @step(u'I keep service_id as {__id}')
 def step_impl(context, __id):
     context.item_ids[__id] = context.response.json()['_id']
@@ -34,11 +33,11 @@ def step_impl(context, __id):
 def step_impl(context):
     context.data = {}
     for row in context.table:
-        context.data["type"] = context.environment_variables[row['type']]
-        context.data["hostname"] = context.environment_variables[row['hostname']]
+        context.data["type"] = context.services[row['type']]
+        context.data["hostname"] = context.services[row['hostname']]
         context.data["username"] = context.accounts[row['username']]
         context.data["password"] = context.accounts[row['password']]
-        context.data["deleteLockTime"] = context.environment_variables[row['deleteLockTime']]
+        context.data["deleteLockTime"] = context.services[row['deleteLockTime']]
     context.response = request(context.base_url, "/services", 'POST', None, None, context.data, context.params)
 
     

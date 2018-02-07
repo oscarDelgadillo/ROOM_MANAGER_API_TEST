@@ -46,13 +46,7 @@ def before_all(context):
     context.after_method = None
     context.item_ids = {}
 
-    context.environment_variables = {}
-    context.environment_variables['__EXCHANGE_SERVER'] = config_data['__EXCHANGE_SERVER']
-    context.environment_variables['__HOSTNAME'] = config_data['__HOSTNAME']
-    context.environment_variables['__NAME_SERVER'] = config_data['__NAME_SERVER']
-    context.environment_variables['__TYPE_SERVER'] = config_data['__TYPE_SERVER']
-    context.environment_variables['__VERSION_SERVER'] = config_data['__VERSION_SERVER']
-    context.environment_variables['__DELETE_LOCK_TIME'] = config_data['__DELETE_LOCK_TIME']
+
 
     context.accounts = {}
     context.accounts['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMINISTRATOR']
@@ -73,6 +67,10 @@ def before_all(context):
     context.services['__USER_ADMINISTRATOR'] = config_data_services['__USER_ADMINISTRATOR']
     context.services['__PASSWORD_ADMINISTRATOR'] = config_data_services['__PASSWORD_ADMINISTRATOR']
     context.services['__DELETE_LOCK_TIME'] = config_data_services['__DELETE_LOCK_TIME']
+
+    context.services['__EXCHANGE_SERVER'] = config_data_services['__EXCHANGE_SERVER']
+    context.services['__NAME_SERVER'] = config_data_services['__NAME_SERVER']
+    context.services['__VERSION_SERVER'] = config_data_services['__VERSION_SERVER']
 
 def after_step(context, step):
     """This method executes actions after scenario"""

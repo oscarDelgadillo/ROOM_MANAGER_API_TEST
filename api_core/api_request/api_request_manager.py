@@ -27,10 +27,19 @@ def post_request(base_url, end_point, credentials, data):
 
 def put_request(base_url, end_point, credentials, data):
     uri = base_url + end_point
+    print("****************************")
+    print("puuuuuuuuuuuuuuuuuuuuuut")
     headers = {'Accept': 'application/json'}
-    headers['Credentials'] = credentials
-    headers['ServiceName'] = 'ExchangeServer'
+    #headers['Credentials'] = credentials
+    headers['Content-Type'] = 'application/json'
+   # headers['Content-Type'] = 'ExchangeServer'
+
+    print("uri",uri)
+    print("hed",headers)
+    print("json",data)
+    print("****************************")
     response = requests.put(url=uri, headers=headers, json=data)
+    print("resssponse", response.status_code)
     return response
 
 

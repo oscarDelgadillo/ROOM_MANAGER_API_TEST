@@ -9,5 +9,5 @@ Feature: Delete services using service ID
     When I DELETE to /services/__ServId
       And I send the request
     Then I should get a response with status code 200
-     And The response should said service "NotFound"
-     #And The json responce should be valid in scheme
+     And The response should say service "NotFound"
+

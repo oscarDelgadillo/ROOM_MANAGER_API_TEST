@@ -1,4 +1,4 @@
-from behave import then
+from behave import then, step
 from compare import expect
 
 from api_core.api_request.api_request_manager import get_delete_request, get_request
@@ -16,7 +16,7 @@ def step_impl(context):
     expect(expected_body).to_equal(context.response.json())
 
 
-@then(u'The response should said service "{message}"')
+@then(u'The response should say service "{message}"')
 def step_impl(context, message):
     responce = get_request(context.base_url, context.endpoint, None, None)
     expect(responce.json()['name']).to_equal(message)
@@ -26,3 +26,31 @@ def step_impl(context, message):
 def step_impl(context):
     item = get_request(context.base_url, context.endpoint, None, None)
     expect(compare_json(context.response.json(), item.json())).to_be_truthy()
+
+
+
+
+
+
+
+
+
+
+
+
+
+@step(u'I keep the data changed as "{__data_changed}"')
+def step_impl(context,__data_changed):
+    context.item_ids[__data_changed] = context.data
+
+@then(u'I save the json response got from get services as "{__new_data}"')
+def step_impl(context,__new_data):
+    context.item_ids[__new_data] = get_request(context.base_url, "/services", None, None)
+
+
+
+@then(u'I compare json response "{__data_changed}" between "{__new_data}"')
+def step_impl(context,__data_changed,__new_data):
+    expect(context.response.json()['_id']).to_equal(context.item_ids[__new_data].json()[1]['_id'])
+    expect(context.item_ids[__data_changed]['username']).to_equal(context.item_ids[__new_data].json()[1]['username'])
+
