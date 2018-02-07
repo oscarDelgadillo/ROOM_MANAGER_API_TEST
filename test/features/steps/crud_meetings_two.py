@@ -1,3 +1,4 @@
+from behave import step
 from compare import expect
 from api_core.utils.validate_schemes_json import validate_schema
 from api_core.utils.compare_json import *

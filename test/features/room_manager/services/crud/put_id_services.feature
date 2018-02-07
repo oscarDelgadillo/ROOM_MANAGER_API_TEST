@@ -13,7 +13,11 @@ Feature: Put services using service ID
        | __USER_NAME2 | __COMMON_PASSWORD |
     And I send the request
     Then I should get a response with status code 200
-    And The answer should be the same as the answer Get method
+      And I keep the data changed as __data_changed
+      And I save the json response got from get services as __new_data
+      And I compare json response __data_changer between __new_data
+
+    #And The answer should be the same as the answer Get method
       #And The json responce should be valido with its scheme
 
 

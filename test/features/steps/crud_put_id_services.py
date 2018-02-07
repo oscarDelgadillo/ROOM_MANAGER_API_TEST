@@ -12,3 +12,19 @@ def step_impl(context):
         params['deleteLockTime'] = context.environment_variables['__DELETE_LOCK_TIME']
     context.data = params
     context.credentials = None
+
+
+
+@then(u'I keep the data changed as {__data_changed}')
+def step_impl(context,__data_changed):
+    context.__data_changed = context.data
+
+
+
+@then(u'I keep the json response got from get services as __new_data')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I keep the json response got from get services as __new_data')
+
+@then(u'I compare json response __data_changer between __new_data')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: Then I compare json response __data_changer between __new_data')
