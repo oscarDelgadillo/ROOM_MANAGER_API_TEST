@@ -2,7 +2,7 @@
 Feature: CRUD services
   Test successfully CRUD of services
 
-  @remove_service_after
+  @after_delete_item
   Scenario: Verify that is possible create services
     When I POST to /services
       And I set with the following params for a services
