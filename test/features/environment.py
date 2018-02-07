@@ -1,6 +1,6 @@
 import yaml
 import logging
-from api_core.api_request.api_request_manager import get_delete_request
+from api_core.api_request.api_request_manager import get_delete_request, delete_request, request
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -41,6 +41,15 @@ def before_all(context):
     context.after_credentials = None
     context.after_endpoint = None
     context.after_method = None
+    context.item_ids = {}
+
+    context.environment_variables = {}
+    context.environment_variables['__EXCHANGE_SERVER'] = config_data['__EXCHANGE_SERVER']
+    context.environment_variables['__HOSTNAME'] = config_data['__HOSTNAME']
+    context.environment_variables['__NAME_SERVER'] = config_data['__NAME_SERVER']
+    context.environment_variables['__TYPE_SERVER'] = config_data['__TYPE_SERVER']
+    context.environment_variables['__VERSION_SERVER'] = config_data['__VERSION_SERVER']
+    context.environment_variables['__DELETE_LOCK_TIME'] = config_data['__DELETE_LOCK_TIME']
 
     context.accounts = {}
     context.accounts['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMINISTRATOR']
@@ -51,11 +60,9 @@ def before_all(context):
     context.accounts['__CREDENTIALS_USER1'] = config_data_accounts['__CREDENTIALS_USER1']
     context.accounts['__USER1'] = config_data_accounts['__USER1']
 
-    context.__exchange_server = config_data['__exchange_server']
-    context.__hostname = config_data['__hostname']
-    context.__name_server = config_data['__name_server']
-    context.__type_server = config_data['__type_server']
-    context.__version_server = config_data['__version_server']
+    context.accounts['__USER_NAME1'] = config_data_accounts['__USER_NAME1']
+    context.accounts['__USER_NAME2'] = config_data_accounts['__USER_NAME2']
+    context.accounts['__COMMON_PASSWORD'] = config_data_accounts['__COMMON_PASSWORD']
 
 
 def after_step(context, step):
@@ -81,8 +88,13 @@ def after_scenario(context, scenario):
                                  context.after_item_id,
                                  None).status_code)
 
-    """This method delete a meeting by ID """
+    # """This method delete a meeting by ID """
     if 'after_delete_item' in scenario.tags:
         get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
                            context.item_id, None)
         print("Was deleted meeting id:", context.item_id)
+
+    if 'after_delete_service' in scenario.tags:
+        print(request(context.base_url, context.endpoint, "DELETE", context.credentials,
+                      context.item_id,
+                      context.data, context.params).status_code)

@@ -19,6 +19,7 @@ def step_impl(context, schema):
     context.item_id = item_request[0]["_id"]
 
 
+
 @when(u'I {method} to {end_point}/roomsId')
 def step_impl(context, method, end_point):
     context.end_point = end_point
