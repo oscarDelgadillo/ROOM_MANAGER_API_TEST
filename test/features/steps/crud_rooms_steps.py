@@ -5,10 +5,8 @@ from api_core.api_request.db_request_manager import get_items
 from api_core.api_request.api_request_manager import request
 from api_core.utils.compare_json import compare_json, extract_item
 from api_core.utils.compare_json import json_contains
-from jsonschema import validate
-from jsonschema.exceptions import ValidationError
+from api_core.utils.validate_schemes_json import validate_schema
 from compare import expect
-import json
 
 
 @then(u'I should get a collection with only free {collection}')
@@ -41,13 +39,4 @@ def step_impl(context, collection):
 
 @then(u'The response should have a valid {schema_name} schema')
 def step_impl(context, schema_name):
-    context.schema_name = json.loads(open('test/schemes/' + schema_name + '.json.').read())
-
-    def validate_schema(json_response, schema):
-        try:
-            validate(json_response, schema)
-            return True
-        except ValidationError:
-            return False
-
-    expect(True).to_equal(validate_schema(extract_item(context.response.json()), context.schema_name))
+    expect(True).to_equal(validate_schema(extract_item(context.response.json()), schema_name))
