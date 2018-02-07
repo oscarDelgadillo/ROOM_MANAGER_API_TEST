@@ -49,16 +49,6 @@ def build_service(context,table):
     return json_data
 
 
-    #
-    # for row in context.table:
-    #     json_data['type'] = validate_parameters(context, row['type'])
-    #     json_data['hostname'] = validate_parameters(context, row['hostname'])
-    #     json_data['username'] = validate_parameters(context, row['username'])
-    #     json_data['password'] = validate_parameters(context, row['password'])
-    #     json_data['deleteLockTime'] = int(validate_parameters(context, row['deleteLockTime']))
-    # return json_data
-
-
 def build_params(table):
     """This function builds a Json for usage on as request' params
         params:

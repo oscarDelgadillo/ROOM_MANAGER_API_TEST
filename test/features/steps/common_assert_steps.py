@@ -16,10 +16,12 @@ def step_impl(context):
     expect(expected_body).to_equal(context.response.json())
 
 
-@then(u'The response should say service "{message}"')
+@then(u'The response should display service "{message}"')
 def step_impl(context, message):
-    responce = get_request(context.base_url, context.endpoint, None, None)
-    expect(responce.json()['name']).to_equal(message)
+    print('carajo',context.response.json())
+    print(context.endpoint)
+    print(context.method)
+    expect(context.response.json()['name']).to_equal(message)
 
 
 @then(u'The answer should be the same as the answer Get method')

@@ -3,7 +3,7 @@ Feature: Put services using service ID
 
   @after_delete_service
   Scenario: This scenario verify put service by ID
-    Given Given I have a Service Created with this data:
+    Given Given I have a service Created with this data:
       | hostname   | username     | password          | type          | deleteLockTime     |
       | __HOSTNAME | __USER_NAME1 | __COMMON_PASSWORD | __TYPE_SERVER | __DELETE_LOCK_TIME |
       And I keep service_id as __ServId

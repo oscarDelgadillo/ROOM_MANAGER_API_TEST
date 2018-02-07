@@ -6,43 +6,24 @@ headers = {'Accept': 'application/json'}
 
 def delete_request(base_url, end_point, credentials, params):
     uri = base_url + end_point
-    headers['Credentials'] = credentials
-    headers['ServiceName'] = 'ExchangeServer'
     response = requests.delete(url=uri, headers=headers, params=params)
     return response
 
 
 def post_request(base_url, end_point, credentials, data):
     uri = base_url + end_point
-    headers = {'Accept': 'application/json'}
-    headers['Credentials'] = credentials
-    headers['ServiceName'] = 'ExchangeServer'
     response = requests.post(url=uri, headers=headers, json=data)
     return response
 
 
 def put_request(base_url, end_point, credentials, data):
     uri = base_url + end_point
-    print("****************************")
-    print("puuuuuuuuuuuuuuuuuuuuuut")
-    headers = {'Accept': 'application/json'}
-    #headers['Credentials'] = credentials
-    headers['Content-Type'] = 'application/json'
-   # headers['Content-Type'] = 'ExchangeServer'
-
-    print("uri",uri)
-    print("hed",headers)
-    print("json",data)
-    print("****************************")
     response = requests.put(url=uri, headers=headers, json=data)
-    print("resssponse", response.status_code)
     return response
 
 
 def get_request(base_url, end_point, credentials, param):
     uri = base_url + end_point
-    headers = {'Accept': 'application/json'}
-    headers['Credentials'] = credentials
     response = requests.get(url=uri, headers=headers, params=param)
     return response
 
@@ -89,11 +70,14 @@ def post_put_request(base_url, end_point, method, credentials, item_id, data):
 
 
 def request(base_url, endpoint, method, credentials, item_id, data, params):
+    headers['Credentials'] = credentials
+    headers['ServiceName'] = 'ExchangeServer'
     if method == 'DELETE':
         return delete_request(base_url, endpoint, credentials, data)
     elif method == 'POST':
         return post_request(base_url, endpoint, credentials, data)
     elif method == 'PUT':
+        headers['Content-Type'] = 'application/json'
         return put_request(base_url, endpoint, credentials, data)
     elif method == 'GET':
-        return get_delete_request(base_url, endpoint, method, credentials, item_id, params)
+        return get_request(base_url, endpoint, credentials, data)
