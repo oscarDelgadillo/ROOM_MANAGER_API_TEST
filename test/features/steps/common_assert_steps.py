@@ -1,6 +1,5 @@
 from behave import then
 from compare import expect
-from pprint import pprint
 
 from api_core.api_request.api_request_manager import get_delete_request, get_request
 from api_core.utils.compare_json import compare_json
