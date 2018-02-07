@@ -47,11 +47,9 @@ def before_all(context):
     context.accounts['__CREDENTIALS_ADMINISTRATOR'] = config_data_accounts['__CREDENTIALS_ADMINISTRATOR']
     context.accounts['__USER_COMMON'] = config_data_accounts['__USER_COMMON']
     context.accounts['__CREDENTIALS_COMMON'] = config_data_accounts['__CREDENTIALS_COMMON']
-    context.accounts['__USER_COMMON_1'] = config_data_accounts['__USER_COMMON_1']
-    context.accounts['__CREDENTIALS_COMMON_1'] = config_data_accounts['__CREDENTIALS_COMMON_1']
-    context.accounts['__USER_COMMON_2'] = config_data_accounts['__USER_COMMON_2']
-    context.accounts['__CREDENTIALS_COMMON_2'] = config_data_accounts['__CREDENTIALS_COMMON_2']
     context.accounts['__USER_ROOM'] = config_data_accounts['__USER_ROOM']
+    context.accounts['__CREDENTIALS_USER1'] = config_data_accounts['__CREDENTIALS_USER1']
+    context.accounts['__USER1'] = config_data_accounts['__USER1']
 
     context.__exchange_server = config_data['__exchange_server']
     context.__hostname = config_data['__hostname']
@@ -60,23 +58,31 @@ def before_all(context):
     context.__version_server = config_data['__version_server']
 
 
+def after_step(context, step):
+    """This method executes actions after scenario"""
+    logger.info("Starting After Step execution...")
+    if 'I POST to /meetings' in step.name:
+        context.after_endpoint = context.endpoint
+        context.after_credentials = context.credentials
+
+
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
 
     logger.info("Starting After Scenario execution...")
-    if 'Verify that is possible to retrieve free rooms' or 'Verify that is possible to retrieve busy rooms' in scenario.name:
+
+    if 'tag1' in scenario.tags:
         print("After Meeting _id:", context.after_item_id)
         print("After Credentials:", context.after_credentials)
         print("Endpoint:", context.after_endpoint)
-        # print("DELETE Meeting Response Status Code:",
-        #       # get_delete_request(context.base_url, context.after_endpoint, 'DELETE', context.after_credentials,
-        #       #                    context.after_item_id,
-        #       #                    None).status_code)
+        print("DELETE Meeting Response Status Code:",
+              get_delete_request(context.base_url, context.after_endpoint, 'DELETE',
+                                 context.after_credentials,
+                                 context.after_item_id,
+                                 None).status_code)
 
-
-def after_scenario(context, scenario):
     """This method delete a meeting by ID """
     if 'after_delete_item' in scenario.tags:
         get_delete_request(context.base_url, context.endpoint, context.after_method, context.credentials,
                            context.item_id, None)
-        print("Was deleted item id:", context.item_id)
+        print("Was deleted meeting id:", context.item_id)

@@ -20,20 +20,23 @@ def json_key_contains(key, value, json_response_list):
 
 def compare_json(expected_json, actual_json):
     '''This method check if two json are equals. Otherwise, display when it is not'''
+
     result = True
+    if type(expected_json) and type(actual_json) is not dict:
+        return None
+
     for key in expected_json.keys():
         if key in actual_json.keys():
             if type(expected_json[key]) is ObjectId:
                 if str(expected_json[key]) == str(actual_json[key]):
-                    # print(f'ObjectId: {key}:{expected_dict[key]} is equal to {key}:{actual_dict[key]}')
+                    # print(f'ObjectId: {key}:{expected_json[key]} is equal to {key}:{actual_json[key]}')
                     continue
                 else:
                     result = False
-                    print(f'ObjectId: {key}:{expected_json[key]} is not equal to {key}:{actual_json[0][key]}')
-                    continue
+                    print(f'ObjectId: {key}:{expected_json[key]} is not equal to {key}:{actual_json[key]}')
             else:
                 if expected_json[key] == actual_json[key]:
-                    # print(f'{key}:{expected_dict[key]} is equal to {key}:{actual_dict[key]}')
+                    # print(f'{key}:{expected_json[key]} is equal to {key}:{actual_json[key]}')
                     continue
                 else:
                     print(f'{key}:{expected_json[key]} is not equal to {key}:{actual_json[key]}')
