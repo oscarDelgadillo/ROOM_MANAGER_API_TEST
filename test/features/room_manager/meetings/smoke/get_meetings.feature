@@ -13,7 +13,7 @@ Feature: Meetings smoke test
       And I send the request
     Then I should get a response with status code 200
 
-
+  @after_delete_item
   Scenario: Get Meetings by Id from Room Manager
 
     Given I POST to /meetings
