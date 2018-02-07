@@ -8,3 +8,6 @@ __USER_NAME2: oscar
 __COMMON_PASSWORD: Password123
 __USER1: franco@at05.local
 __CREDENTIALS_USER1: ZnJhbmNvOlBhc3N3b3JkMTIz
+
+__USER_ADMIN: Administrator
+__PASSWORD_ADMIN: Password123
