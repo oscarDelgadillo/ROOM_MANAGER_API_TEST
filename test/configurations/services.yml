@@ -1,0 +1,5 @@
+__TYPE_SERVER: ExchangeServer
+__HOSTNAME: ooo@at05.local
+__USER_ADMINISTRATOR: Administrator
+__PASSWORD_ADMINISTRATOR: Password123
+__DELETE_LOCK_TIME: 10
