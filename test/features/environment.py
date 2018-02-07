@@ -60,8 +60,8 @@ def before_all(context):
     context.accounts['__CREDENTIALS_USER1'] = config_data_accounts['__CREDENTIALS_USER1']
     context.accounts['__USER1'] = config_data_accounts['__USER1']
 
-    context.accounts['__USER_MARCO'] = config_data_accounts['__USER_MARCO']
-    context.accounts['__USER_OSCAR'] = config_data_accounts['__USER_OSCAR']
+    context.accounts['__USER_NAME1'] = config_data_accounts['__USER_NAME1']
+    context.accounts['__USER_NAME2'] = config_data_accounts['__USER_NAME2']
     context.accounts['__COMMON_PASSWORD'] = config_data_accounts['__COMMON_PASSWORD']
 
 
