@@ -75,6 +75,7 @@ def before_all(context):
     context.services['__PASSWORD_ADMINISTRATOR'] = config_data_accounts['__PASSWORD_ADMIN']
     context.services['__DELETE_LOCK_TIME'] = config_data_services['__DELETE_LOCK_TIME']
 
+
 def after_step(context, step):
     """This method executes actions after scenario"""
     logger.info("Starting After Step execution...")
@@ -100,7 +101,8 @@ def after_scenario(context, scenario):
 
     # """This method delete a meeting by ID """
     if 'after_delete_item' in scenario.tags:
-        get_delete_request(context.base_url, context.endpoint, "DELETE", context.credentials, context.after_item_id, None)
+        get_delete_request(context.base_url, context.endpoint, "DELETE", context.credentials, context.after_item_id,
+                           None)
         # request(context.base_url, context.endpoint+'/'+context.item_id, "DELETE", context.credentials, context.item_id, None, None)
         print("Was deleted meeting id:", context.item_id)
 

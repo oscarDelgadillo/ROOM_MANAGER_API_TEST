@@ -8,7 +8,6 @@ from api_core.utils.common_functions import build_params
 def step_impl(context, method, endpoint):
     context.method = method
     aux_endpoint = str(endpoint).split('/')
-    print(aux_endpoint)
     if aux_endpoint.__len__() == 3:
         context.endpoint = '/{}/{}'.format(aux_endpoint[1], context.item_ids[aux_endpoint[2]])
         return
@@ -44,9 +43,9 @@ def step_impl(context):
     context.response = request(context.base_url, "/services", 'POST', None, None, context.data, context.params)
 
 
-@step(u'I keep the "id" as "after_item_id" from JSON response')
-def step_impl(context):
-    context.after_item_id = context.response.json()['_id']
+@step(u'I keep the "{value}" as "{key}" from JSON response')
+def step_impl(context, key, value):
+    exec("context.%s=context.response.json()['%s']" % (key, value))
 
 
 @step(u'I set the following {item_name} info')

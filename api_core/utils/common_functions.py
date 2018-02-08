@@ -68,3 +68,63 @@ def return_json_from_array(id, json_array):
             # item.pop('_id')
             return item
     return []
+
+def build_rooms_query_list(table):
+    """This function builds a query list from query table
+            params:
+                @table: query table to convert
+                @return: A query list
+                """
+    items = []
+    for row in table:
+        items.append(row['_id'])
+        items.append(row['uuid'])
+        items.append(row['name'])
+        items.append(row['displayName'])
+        items.append(row['email'])
+        items.append(row['code'])
+        items.append(row['capacity'])
+        items.append(row['service'])
+        items.append(row['roomStatus'])
+        items.append(row['equipment'])
+        items.append(row['location'])
+
+    query_list = clean_list(items, '')
+    return query_list
+
+
+def build_query(query_list):
+    """This function builds a query for usage as request' query
+            params:
+                @query_list: query list to convert
+                @return: A query string
+                """
+    query_string = add_separator(query_list, ',')
+    query = {'$select': query_string}
+    return query
+
+
+def clean_list(items, chain):
+    """This function cleans a list of the chain given
+                params:
+                    @original_list: the target list
+                    @chain: the target list
+                    @return: A new list without items equal to chain
+                    """
+    new_list = []
+    for item in items:
+        if item != chain:
+            new_list.append(item)
+    return new_list
+
+
+def add_separator(items, separator):
+    """This function adds a separator between items of a list
+                    params:
+                        @items: the target list
+                        @separator: the separator
+                        @return: a string with the separator between elements
+                        of the list.
+                        """
+    return separator.join(items)
+
