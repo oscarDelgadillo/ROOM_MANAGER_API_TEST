@@ -1,8 +1,12 @@
-from behave import when, then, given, step
+from behave import then, given, step
+from bson import ObjectId
 from compare import expect
 from api_core.api_request.api_request_manager import get_delete_request
-from api_core.utils.compare_json import compare_json
+from api_core.api_request.db_request_manager import get_items, to_array_json
+from api_core.utils.common_functions import return_json_from_array
+from api_core.utils.compare_json import compare_json, equivalence_json
 from api_core.utils.validate_parameters import validate_parameters1
+from api_core.utils.validate_schemes_json import validate_schema
 
 
 @step(u'I set with the following params for a services')
@@ -48,15 +52,21 @@ def step_impl(context):
     context.after_item_id = context.response.json()['_id']
 
 
-@step(u'The response "_expected_response" should be equal to database service schema')
-def step_impl(context):
-    raise NotImplementedError(u'STEP: Then The response "_get_response" should be equal to database service schema')
+@then(u'The response "{_actual_response}" should be contain in database {collection} collection')
+def step_impl(context, actual_response, collection):
+    database_request = {}
+    database_request['_id'] = ObjectId(context.after_item_id)
+    context.request = get_items(context.rm_host, context.rm_db_port, context.database, collection, database_request,
+                                None)
+    db_json = return_json_from_array(context.after_item_id, context.responses[actual_response].json())
+    json_compare = to_array_json(context.request)[0]
+    expect(equivalence_json(db_json, json_compare)).to_be_truthy()
 
 
-@then(u'this catch')
-def step_impl(context):
-    print('++++++++++++++++++')
-    # print('id', context.item_ids['__ServId'])
-    # print('res', context.responses['_get_response'].json())
-    print('code:', context.response.status_code)
-    expect(False).to_be_truthy()
+# @then(u'The response "{response}" should have a valid {schema_name} schema')
+# def step_impl(context, response, schema_name):
+#     print(">>>>>>>>>>>", context.response.json())
+#     print(">>>>>>>>>>>",context.responses[response].json())
+#     print('<<<<<<<<<<',validate_schema(context.responses[response].json(), schema_name))
+#     # expect(validate_schema(context.responses[response].json(), schema_name)).to_be_truthy()
+#     expect(False).to_be_truthy()

@@ -47,3 +47,24 @@ def get_items(host, port, data_base_name, schema, request, return_data):
         result = data_base[schema].find(request)
     return result
 
+
+def to_json(request):
+    """This method performs conversion of database response Cursor to Json.
+            params:
+                @request: A Cursor object
+                """
+    result = {}
+    for doc in request:
+        print(doc)
+        result.update(doc)
+    return result
+
+def to_array_json(request):
+    """This method performs conversion of database response Cursor to Json.
+                params:
+                    @request: A Cursor object
+                    """
+    result = []
+    for doc in request:
+        result.append(doc)
+    return result

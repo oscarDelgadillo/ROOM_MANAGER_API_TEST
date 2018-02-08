@@ -1,9 +1,14 @@
+# Module: compare_json
 from bson import ObjectId
 
 
 def json_contains(json, json_response_list):
-    '''This method receive a json and a list of json  of the response;
-    json checks if this content in the json list.'''
+    """This method receive a json and a list of json  of the response;
+    json checks if this content in the json list.
+        params:
+            @json: Json to validate
+            @json_response_list: List of items (Json)
+            """
     if json in json_response_list:
         return True
     else:
@@ -11,34 +16,70 @@ def json_contains(json, json_response_list):
 
 
 def json_key_contains(key, value, json_response_list):
-    '''This method verify if a key with some value is content in the json list.'''
+    """This method verify if a key with some value is content in the json list.
+        params:
+            @key: key to use for comparing
+            @value: value to compare
+            @json_response_list: List of items (Json)
+            """
     for item in json_response_list:
         if item[key] == value:
             return True
     return False
 
 
-def compare_json(expected_json, actual_json):
-    '''This method check if two json are equals. Otherwise, display when it is not'''
-
-    result = True
-    if type(expected_json) and type(actual_json) is not dict:
+def compare_json(expected, actual):
+    """This method check if two json are equals. Otherwise, display when it is not
+        params:
+            @expected_json: Object base to compare with
+            @actual_json: Object to compare
+            """
+    if type(expected) and type(actual) is not dict:
         return None
 
-    for key in expected_json.keys():
-        if key in actual_json.keys():
-            if type(expected_json[key]) is ObjectId:
-                if str(expected_json[key]) == str(actual_json[key]):
-                    # print(f'ObjectId: {key}:{expected_json[key]} is equal to {key}:{actual_json[key]}')
+    result = True
+    for key in expected.keys():
+        if key in actual.keys():
+            if type(expected[key]) is ObjectId:
+                if str(expected[key]) == str(actual[key]):
                     continue
                 else:
                     result = False
-                    print(f'ObjectId: {key}:{expected_json[key]} is not equal to {key}:{actual_json[key]}')
+                    print(f'Exp:{key}-> ObjId({expected[key]}) not equal to Act:{key}-> ObjId({actual[key]})')
             else:
-                if expected_json[key] == actual_json[key]:
+                if expected[key] == actual[key]:
                     # print(f'{key}:{expected_json[key]} is equal to {key}:{actual_json[key]}')
                     continue
                 else:
-                    print(f'{key}:{expected_json[key]} is not equal to {key}:{actual_json[key]}')
+                    print(f'Exp:{key}-> {expected[key]} not equal to Act:{key}-> {actual[key]}')
                     result = False
     return result
+
+
+def extract_item(json_obj):
+    """This method extracts a Json (dict format) from a given json response
+        params:
+            @json_obj: object to use
+            @return: A json item if the input is a non empty list, otherwise it returns the empty list
+            """
+    if type(json_obj) is not dict:
+        if type(json_obj) is list:
+            if len(json_obj) != 0:
+                print(json_obj[0])
+                return json_obj[0]
+            else:
+                print(json_obj)
+                return json_obj
+    print(json_obj)
+    return json_obj
+
+
+def equivalence_json(json, to_compare):
+    try:
+        for key in json:
+            if not (str(json[key]) in str(to_compare[key]) or str(to_compare[key]) in str(json[key])):
+                print(str(to_compare[key]) + "!=" + str(json[key]))
+                return False
+        return True
+    except KeyError:
+        return False

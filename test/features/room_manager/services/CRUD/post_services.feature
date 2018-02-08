@@ -16,8 +16,7 @@ Feature: POST services
       And I send the request
       And I keep the response as "_validate_response" from the previous step
       And The response "_post_response" should be equal to response "_validate_response"
-#      And It should be equal "_post_response" and "_validate_response"
-#      And The response should be have a property schema
+      And The response should have a valid schema_services schema
 
 
 
