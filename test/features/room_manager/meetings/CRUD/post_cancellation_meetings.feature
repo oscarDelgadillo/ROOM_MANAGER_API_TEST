@@ -28,6 +28,6 @@ Feature: POST /meetings/{meetingId}/cancellation
       And I send '__CREDENTIALS_ADMINISTRATOR' as credentials
       And I send the request update
       And I construct a expected response
-    Then I should get a response with status code 200 extra
+    Then I should get a response with status code 200
       And the built expected response should be equal to the obtained response
 
