@@ -45,11 +45,12 @@ def compare_json(expected_json, actual_json):
 
 
 def equivalence_json(json, to_compare):
-   try:
-       for key in json:
-           if not (str(json[key]) in str(to_compare[key]) or str(to_compare[key]) in str(json[key])):
-               print(str(to_compare[key]) + "!=" + str(json[key]))
-               return False
-       return True
-   except KeyError:
-       return False
+    '''This method check if one dictionary contains the other'''
+    try:
+        for key in json:
+            if not (str(json[key]) in str(to_compare[key]) or str(to_compare[key]) in str(json[key])):
+                print(str(to_compare[key]) + "!=" + str(json[key]))
+                return False
+        return True
+    except KeyError:
+        return False
