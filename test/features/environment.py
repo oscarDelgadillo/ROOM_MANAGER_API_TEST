@@ -57,6 +57,7 @@ def before_all(context):
     context.accounts['__USER_ROOM'] = config_data_accounts['__USER_ROOM']
     context.accounts['__CREDENTIALS_USER1'] = config_data_accounts['__CREDENTIALS_USER1']
     context.accounts['__USER1'] = config_data_accounts['__USER1']
+    context.accounts['__USER2'] = config_data_accounts['__USER2']
 
     context.accounts['__USER_NAME1'] = config_data_accounts['__USER_NAME1']
     context.accounts['__USER_NAME2'] = config_data_accounts['__USER_NAME2']
@@ -76,8 +77,7 @@ def before_all(context):
 
 
 def after_step(context, step):
-    """This method executes actions after scenario"""
-    # logger.info("Starting After Step execution...")
+    """This method executes actions after step"""
     if 'I POST to /meetings' in step.name:
         context.after_endpoint = context.endpoint
         context.after_credentials = context.credentials

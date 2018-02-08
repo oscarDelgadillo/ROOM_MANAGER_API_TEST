@@ -28,13 +28,13 @@ def build_meeting(context, table):
         json_data['body'] = row['body']
         json_data['start'] = row['start']
         json_data['end'] = row['end']
-        json_data['rooms'] = [row['rooms']]
-        json_data['attendees'] = [row['attendees']]
-        json_data['optionalAttendees'] = [row['optionalAttendees']]
+        json_data['rooms'] = [validate_parameters(context, row['rooms'])]
+        json_data['attendees'] = [validate_parameters(context, row['attendees'])]
+        json_data['optionalAttendees'] = [validate_parameters(context, row['optionalAttendees'])]
     return json_data
 
 
-def build_service(context,table):
+def build_service(context, table):
     """This function builds a Json for usage on services' requests
         params:
             @table: service table to convert
@@ -68,6 +68,7 @@ def return_json_from_array(id, json_array):
             # item.pop('_id')
             return item
     return []
+
 
 def build_rooms_query_list(table):
     """This function builds a query list from query table
@@ -127,4 +128,3 @@ def add_separator(items, separator):
                         of the list.
                         """
     return separator.join(items)
-

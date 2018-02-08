@@ -3,6 +3,7 @@ from api_core.api_request.api_request_manager import request
 from api_core.utils.common_functions import build_json
 from api_core.utils.common_functions import build_params
 
+
 @step(u'I {method} to {endpoint}')
 def step_impl(context, method, endpoint):
     context.method = method

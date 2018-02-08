@@ -3,11 +3,11 @@ Feature: Retrieve Rooms
   Test successfully retrieving of Room(s)
 
   Background:
-    Given I send '__CREDENTIALS_ADMINISTRATOR' as credentials
+    Given I send '__CREDENTIALS_USER1' as credentials
       And I POST to /meetings
       And I set the following meeting info
-      | organizer            | subject                            | body | start                    | end                      | rooms           | attendees       | optionalAttendees |
-      | __USER_ADMINISTRATOR | Create meeting to Test room status | Test | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | room01@at05.edu | franco@at05.edu | marco@at05.edu    |
+      | organizer | subject                            | body | start                    | end                      | rooms       | attendees | optionalAttendees |
+      | __USER1   | Create meeting to Test room status | Test | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | __USER_ROOM | __USER1   | __USER2           |
       And I send the request
       And I keep the "_id" as "after_item_id" from JSON response
 
