@@ -9,7 +9,8 @@ Feature: Delete services using service ID
     When I DELETE to /services/__ServId
       And I send the request
     Then I should get a response with status code 200
-     And I GET to /services/__ServId
-     And I send the request
-     And The response should display service "NotFound"
+      And I GET to /services/__ServId
+      And I send the request
+      And The response should display service "NotFound"
+      And The response should have a valid schema_services schema
 

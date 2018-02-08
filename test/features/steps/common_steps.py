@@ -1,6 +1,6 @@
 from behave import step
 from api_core.api_request.api_request_manager import request
-from api_core.utils.common_functions import build_json, build_service
+from api_core.utils.common_functions import build_json
 from api_core.utils.common_functions import build_params
 
 
@@ -27,14 +27,20 @@ def step_impl(context):
 
 @step(u'I keep service_id as {__id}')
 def step_impl(context, __id):
+    print(context.response.status_code)
+    context.item_ids['backup_id'] = context.response.json()['_id']
     context.item_ids[__id] = context.response.json()['_id']
+    print(">>>>>>>>>>>>>>>>>>>>>>>",context.item_ids)
 
 
 
 @step(u'Given I have a {__service} Created with this data')
 def step_impl(context,__service):
     context.data = {}
+    print("carajoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
     build_json(context.table,__service,context)
+    print("mierdaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+
     context.response = request(context.base_url, "/services", 'POST', None, None, context.data, context.params)
 
 @step(u'I keep the "id" as "after_item_id" from JSON response')

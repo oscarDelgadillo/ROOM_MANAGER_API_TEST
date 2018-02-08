@@ -12,7 +12,12 @@ def delete_request(base_url, end_point, credentials, params):
 
 def post_request(base_url, end_point, credentials, data):
     uri = base_url + end_point
+    print("ayudaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    print('uuuuuuuuuuri',uri)
+    print('heeeeder',headers)
+    print('daraaaaaaaaaaaaa',data)
     response = requests.post(url=uri, headers=headers, json=data)
+    print("keilaaaaaaaaaaaaaaa",response.status_code)
     return response
 
 
@@ -52,7 +57,6 @@ def get_delete_request(base_url, end_point, method, credentials, item_id, params
 
 def post_put_request(base_url, end_point, method, credentials, item_id, data):
     """This method performs POST or PUT request"""
-    headers = {'Accept': 'application/json'}
     response = None
     uri = base_url + end_point
     headers['Content-Type'] = 'application/json'
@@ -70,11 +74,14 @@ def post_put_request(base_url, end_point, method, credentials, item_id, data):
 
 
 def request(base_url, endpoint, method, credentials, item_id, data, params):
-    headers['Credentials'] = credentials
-    headers['ServiceName'] = 'ExchangeServer'
+    print("noooooooooooooooooooooooooooooooooo")
+
+    #headers['ServiceName'] = 'ExchangeServer'
     if method == 'DELETE':
         return delete_request(base_url, endpoint, credentials, data)
     elif method == 'POST':
+        headers['Content-Type'] = 'application/json'
+        headers['Credentials'] = credentials
         return post_request(base_url, endpoint, credentials, data)
     elif method == 'PUT':
         headers['Content-Type'] = 'application/json'

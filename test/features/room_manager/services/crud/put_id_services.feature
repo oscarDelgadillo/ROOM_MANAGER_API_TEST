@@ -15,7 +15,8 @@ Feature: Put services using service ID
     Then I should get a response with status code 200
       And I keep the data changed as "__data_changed"
       And I save the json response got from get services as "__new_data"
-     And I compare json response "__data_changed" between "__new_data"
+      And I compare json response "__data_changed" between "__new_data"
+      And The response should have a valid schema_services schema
 
 
 

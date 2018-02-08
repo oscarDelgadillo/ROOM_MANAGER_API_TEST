@@ -103,6 +103,15 @@ def after_scenario(context, scenario):
         print("Was deleted meeting id:", context.item_id)
 
     if 'after_delete_service' in scenario.tags:
+        original_endpoint = context.endpoint
+        print("*********************************>>", original_endpoint)
+        aux_endpoint = str(original_endpoint).split('/')
+        print("*********************************>>", aux_endpoint)
+        if aux_endpoint.__len__() == 3:
+            print("*********************************>>")
+            print("*********************************>>", context.item_ids)
+            context.endpoint = '/{}/{}'.format(aux_endpoint[1], context.item_ids["backup_id"])
+
         print(request(context.base_url, context.endpoint, "DELETE", context.credentials,
                       context.item_id,
                       context.data, context.params).status_code)
