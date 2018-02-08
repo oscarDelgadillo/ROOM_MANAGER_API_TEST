@@ -3,13 +3,13 @@ Feature: Retrieve Rooms
   Test successfully retrieving of Room(s)
 
   Background:
-    Given I send '__CREDENTIALS_USER1' as credentials
+    Given I send '__CREDENTIALS_ADMINISTRATOR' as credentials
       And I POST to /meetings
       And I set the following meeting info
-      | organizer | subject                            | body | start                    | end                      | rooms             | attendees         | optionalAttendees |
-      | __USER1   | Create meeting to Test room status | Test | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | room01@at05.local | franco@at05.local | marco@at05.local  |
+      | organizer            | subject                            | body | start                    | end                      | rooms           | attendees       | optionalAttendees |
+      | __USER_ADMINISTRATOR | Create meeting to Test room status | Test | 2018-02-09T15:00:00.000Z | 2018-02-09T16:00:00.000Z | room01@at05.edu | franco@at05.edu | marco@at05.edu    |
       And I send the request
-      And I keep the "id" as "after_item_id" from JSON response
+      And I keep the "_id" as "after_item_id" from JSON response
 
   @bug @delete_item
   Scenario: Verify that is possible to retrieve free rooms
