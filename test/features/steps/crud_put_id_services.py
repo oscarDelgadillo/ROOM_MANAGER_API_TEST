@@ -12,14 +12,3 @@ def step_impl(context):
         params['deleteLockTime'] = context.services[row['deleteLockTime']]
     context.data = params
     context.credentials = None
-
-
-
-
-
-
-
-
-
-
-

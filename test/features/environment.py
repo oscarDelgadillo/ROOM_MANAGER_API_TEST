@@ -68,6 +68,7 @@ def before_all(context):
     context.services['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMIN']
     context.services['__PASSWORD_ADMINISTRATOR'] = config_data_accounts['__PASSWORD_ADMIN']
     context.services['__DELETE_LOCK_TIME'] = config_data_services['__DELETE_LOCK_TIME']
+    context.services['__DELETE_LOCK_TIME_EMPTY'] = config_data_services['__DELETE_LOCK_TIME_EMPTY']
 
     context.services['__EXCHANGE_SERVER'] = config_data_services['__EXCHANGE_SERVER']
     context.services['__NAME_SERVER'] = config_data_services['__NAME_SERVER']

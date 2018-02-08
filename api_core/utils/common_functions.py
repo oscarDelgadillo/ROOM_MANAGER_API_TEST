@@ -1,4 +1,5 @@
 # Module: common_functions
+from api_core.utils.validate_parameters import validate_parameters
 
 
 def build_json(table, item_name, context):
@@ -21,6 +22,15 @@ def build_meeting(context, table):
             @context: context from step
             """
     json_data = {}
+    for row in table:
+        json_data['organizer'] = validate_parameters(context, row['organizer'])
+        json_data['subject'] = row['subject']
+        json_data['body'] = row['body']
+        json_data['start'] = row['start']
+        json_data['end'] = row['end']
+        json_data['rooms'] = [row['rooms']]
+        json_data['attendees'] = [row['attendees']]
+        json_data['optionalAttendees'] = [row['optionalAttendees']]
     return json_data
 
 
