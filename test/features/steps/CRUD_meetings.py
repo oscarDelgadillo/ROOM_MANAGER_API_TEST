@@ -9,9 +9,10 @@ from api_core.utils.compare_json import compare_json
 def step_impl(context):
     context.resp = get_delete_request(context.base_url,
                                       context.endpoint,
-                                      context.after_method,
+                                      context.method,
                                       context.credentials,
-                                      context.id_meeting, None)
+                                      context.id_meeting,
+                                      None)
 
 
 @step(u'I send the request update')
