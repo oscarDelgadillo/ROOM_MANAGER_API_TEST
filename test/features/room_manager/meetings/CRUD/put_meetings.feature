@@ -1,4 +1,4 @@
-@meetings @crud @put
+@meetings @CRUD @put
 Feature: PUT /meetings/{meetingId}
 
   Background: Create a meeting

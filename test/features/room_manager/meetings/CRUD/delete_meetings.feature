@@ -1,4 +1,4 @@
-@meetings @crud @delete
+@meetings @CRUD @delete
 Feature: DELETE /meetings/{meetingId}
 
   Background: Create a meeting
