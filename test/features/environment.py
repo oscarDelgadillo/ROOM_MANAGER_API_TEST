@@ -71,8 +71,8 @@ def before_all(context):
     context.services = {}
     context.services['__TYPE_SERVER'] = config_data_services['__TYPE_SERVER']
     context.services['__HOSTNAME'] = config_data_services['__HOSTNAME']
-    context.services['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMIN']
-    context.services['__PASSWORD_ADMINISTRATOR'] = config_data_accounts['__PASSWORD_ADMIN']
+    context.services['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMINISTRATOR']
+    context.services['__PASSWORD_ADMINISTRATOR'] = config_data_accounts['__COMMON_PASSWORD']
     context.services['__DELETE_LOCK_TIME'] = config_data_services['__DELETE_LOCK_TIME']
 
 def after_step(context, step):
