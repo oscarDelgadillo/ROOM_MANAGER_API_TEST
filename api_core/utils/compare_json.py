@@ -75,6 +75,7 @@ def extract_item(json_obj):
 
 
 def equivalence_json(json, to_compare):
+    '''This method check if one dictionary contains the other'''
     try:
         for key in json:
             if not (str(json[key]) in str(to_compare[key]) or str(to_compare[key]) in str(json[key])):

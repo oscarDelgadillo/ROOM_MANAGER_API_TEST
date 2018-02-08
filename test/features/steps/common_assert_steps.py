@@ -5,7 +5,7 @@ from api_core.api_request.api_request_manager import get_delete_request, get_req
 from api_core.utils.compare_json import compare_json
 
 
-@then(u'I should get a response with status code {status_code:d}')
+@step(u'I should get a response with status code {status_code:d}')
 def step_impl(context, status_code):
     expect(status_code).to_equal(context.response.status_code)
 

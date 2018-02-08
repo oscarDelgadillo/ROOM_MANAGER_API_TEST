@@ -1,0 +1,21 @@
+{
+     "type" : "array",
+     "properties" : {
+         "_id" : {"type" : "string"},
+         "organizer" : {"type" : "string"},
+         "owner" : {"type" : "string"},
+         "subject" : {"type" : "string"},
+         "body" : {"type" : "string"},
+         "start" : {"type" : "string"},
+         "end" : {"type" : "string"},
+         "rooms" : {"type" : "array",
+                   "items": { "type": "string"}
+                    },
+         "attendees" : {"type" : "array",
+                        "items":{"type": "string"}
+                        },
+         "optionalAttendees" : {"type" : "array",
+                                "items":{"type": "string"}
+                                }
+     }
+}
