@@ -34,18 +34,18 @@ def build_meeting(context, table):
     return json_data
 
 
-def build_service(context, table):
+def build_service(context,table):
     """This function builds a Json for usage on services' requests
         params:
             @table: service table to convert
             @context: context from step"""
     json_data = {}
     for row in table:
-        json_data['type'] = validate_parameters(context, row['type'])
-        json_data['hostname'] = validate_parameters(context, row['hostname'])
-        json_data['username'] = validate_parameters(context, row['username'])
-        json_data['password'] = validate_parameters(context, row['password'])
-        json_data['deleteLockTime'] = int(validate_parameters(context, row['deleteLockTime']))
+        context.data["type"] = context.services[row['type']]
+        context.data["hostname"] = context.services[row['hostname']]
+        context.data["username"] = context.accounts[row['username']]
+        context.data["password"] = context.accounts[row['password']]
+        context.data["deleteLockTime"] = context.services[row['deleteLockTime']]
     return json_data
 
 

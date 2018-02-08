@@ -47,13 +47,7 @@ def before_all(context):
     context.item_ids = {}
     context.responses = {}
 
-    context.environment_variables = {}
-    context.environment_variables['__EXCHANGE_SERVER'] = config_data['__EXCHANGE_SERVER']
-    context.environment_variables['__HOSTNAME'] = config_data['__HOSTNAME']
-    context.environment_variables['__NAME_SERVER'] = config_data['__NAME_SERVER']
-    context.environment_variables['__TYPE_SERVER'] = config_data['__TYPE_SERVER']
-    context.environment_variables['__VERSION_SERVER'] = config_data['__VERSION_SERVER']
-    context.environment_variables['__DELETE_LOCK_TIME'] = config_data['__DELETE_LOCK_TIME']
+
 
     context.accounts = {}
     context.accounts['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMINISTRATOR']
@@ -74,6 +68,11 @@ def before_all(context):
     context.services['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMIN']
     context.services['__PASSWORD_ADMINISTRATOR'] = config_data_accounts['__PASSWORD_ADMIN']
     context.services['__DELETE_LOCK_TIME'] = config_data_services['__DELETE_LOCK_TIME']
+    context.services['__DELETE_LOCK_TIME_EMPTY'] = config_data_services['__DELETE_LOCK_TIME_EMPTY']
+
+    context.services['__EXCHANGE_SERVER'] = config_data_services['__EXCHANGE_SERVER']
+    context.services['__NAME_SERVER'] = config_data_services['__NAME_SERVER']
+    context.services['__VERSION_SERVER'] = config_data_services['__VERSION_SERVER']
 
 
 def after_step(context, step):
@@ -107,6 +106,15 @@ def after_scenario(context, scenario):
         print("Was deleted meeting id:", context.item_id)
 
     if 'after_delete_service' in scenario.tags:
+        original_endpoint = context.endpoint
+        print("*********************************>>", original_endpoint)
+        aux_endpoint = str(original_endpoint).split('/')
+        print("*********************************>>", aux_endpoint)
+        if aux_endpoint.__len__() == 3:
+            print("*********************************>>")
+            print("*********************************>>", context.item_ids)
+            context.endpoint = '/{}/{}'.format(aux_endpoint[1], context.item_ids["backup_id"])
+
         print(request(context.base_url, context.endpoint, "DELETE", context.credentials,
                       context.item_id,
                       context.data, context.params).status_code)

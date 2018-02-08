@@ -1,12 +1,12 @@
 {
- "type": "object",
- "properties": {
-   "uuid":{"type": "string"},
-   "type": {"type": "string"},
-   "name": {"type": "string"},
-   "version": {"type": "string"},
-   "hostname": {"type": "string"},
-   "username": {"type": "string"},
-   "deleteLockTime": {"type": "number"}
- }
+  "type": "object",
+  "properties": {
+    "uuid":{"type": "string"},
+    "type": {"type": "string"},
+    "name": {"type": "string"},
+    "version": {"type": "string"},
+    "hostname": {"type": "string"},
+    "username": {"type": "string"},
+    "deleteLockTime": {"type": "number"}
+  }
 }

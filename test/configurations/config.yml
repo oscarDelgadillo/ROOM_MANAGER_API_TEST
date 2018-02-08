@@ -11,4 +11,3 @@ __HOSTNAME: at05.local
 __NAME_SERVER: Exchange Server 2013
 __TYPE_SERVER: ExchangeServer
 __VERSION_SERVER: 15.0 (Build 30516.32)
-__DELETE_LOCK_TIME: 10
