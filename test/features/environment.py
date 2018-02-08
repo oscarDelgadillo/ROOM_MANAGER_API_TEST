@@ -77,7 +77,7 @@ def before_all(context):
 
 def after_step(context, step):
     """This method executes actions after scenario"""
-    logger.info("Starting After Step execution...")
+    # logger.info("Starting After Step execution...")
     if 'I POST to /meetings' in step.name:
         context.after_endpoint = context.endpoint
         context.after_credentials = context.credentials
@@ -85,18 +85,12 @@ def after_step(context, step):
 
 def after_scenario(context, scenario):
     """This method executes actions after scenario"""
-
     logger.info("Starting After Scenario execution...")
-
     if 'delete_item' in scenario.tags:
-        print("After Meeting _id:", context.after_item_id)
-        print("After Credentials:", context.after_credentials)
-        print("Endpoint:", context.after_endpoint)
-        print("DELETE Meeting Response Status Code:",
-              get_delete_request(context.base_url, context.after_endpoint, 'DELETE',
+        get_delete_request(context.base_url, context.after_endpoint, 'DELETE',
                                  context.after_credentials,
                                  context.after_item_id,
-                                 None).status_code)
+                                 None)
 
     # """This method delete a meeting by ID """
     if 'after_delete_item' in scenario.tags:
@@ -107,15 +101,11 @@ def after_scenario(context, scenario):
 
     if 'after_delete_service' in scenario.tags:
         original_endpoint = context.endpoint
-        print("*********************************>>", original_endpoint)
         aux_endpoint = str(original_endpoint).split('/')
-        print("*********************************>>", aux_endpoint)
         if aux_endpoint.__len__() == 3:
-            print("*********************************>>")
-            print("*********************************>>", context.item_ids)
             context.endpoint = '/{}/{}'.format(aux_endpoint[1], context.item_ids["backup_id"])
 
-        print(request(context.base_url, context.endpoint, "DELETE", context.credentials,
+        request(context.base_url, context.endpoint, "DELETE", context.credentials,
                       context.item_id,
-                      context.data, context.params).status_code)
+                      context.data, context.params)
 
