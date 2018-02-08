@@ -45,7 +45,7 @@ def before_all(context):
     context.after_endpoint = None
     context.after_method = None
     context.item_ids = {}
-    context.responses={}
+    context.responses = {}
 
     context.environment_variables = {}
     context.environment_variables['__EXCHANGE_SERVER'] = config_data['__EXCHANGE_SERVER']
@@ -108,3 +108,4 @@ def after_scenario(context, scenario):
         print(request(context.base_url, context.endpoint, "DELETE", context.credentials,
                       context.item_id,
                       context.data, context.params).status_code)
+

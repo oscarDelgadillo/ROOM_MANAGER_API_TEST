@@ -60,3 +60,11 @@ def build_params(table):
         params['to'] = row['to']
         params['status'] = row['status']
     return params
+
+
+def return_json_from_array(id, json_array):
+    for item in json_array:
+        if item['_id'] == id:
+            # item.pop('_id')
+            return item
+    return []

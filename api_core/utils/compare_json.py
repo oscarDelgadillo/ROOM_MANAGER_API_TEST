@@ -72,3 +72,14 @@ def extract_item(json_obj):
                 return json_obj
     print(json_obj)
     return json_obj
+
+
+def equivalence_json(json, to_compare):
+    try:
+        for key in json:
+            if not (str(json[key]) in str(to_compare[key]) or str(to_compare[key]) in str(json[key])):
+                print(str(to_compare[key]) + "!=" + str(json[key]))
+                return False
+        return True
+    except KeyError:
+        return False
