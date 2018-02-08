@@ -5,9 +5,9 @@ from behave import when
 def step_impl(context):
     context.params = {}
     for row in context.table:
-        context.params["hostname"] = context.environment_variables[row['hostname']]
-        context.params["name"] = context.environment_variables[row['name']]
-        context.params["type"] = context.environment_variables[row['type']]
-        context.params["version"] = context.environment_variables[row['version']]
+        context.params["hostname"] = context.services[row['hostname']]
+        context.params["name"] = context.services[row['name']]
+        context.params["type"] = context.services[row['type']]
+        context.params["version"] = context.services[row['version']]
     context.credentials = None
     context.item_id = None

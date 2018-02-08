@@ -5,10 +5,4 @@ root_path: /api
 version: /v1
 protocol: http
 data_base_rm : rmserver
-
-__EXCHANGE_SERVER: 10.28.133.16
-__HOSTNAME: at05.local
-__NAME_SERVER: Exchange Server 2013
-__TYPE_SERVER: ExchangeServer
-__VERSION_SERVER: 15.0 (Build 30516.32)
-__DELETE_LOCK_TIME: 10
+data_base_ex : exchangeservicedb

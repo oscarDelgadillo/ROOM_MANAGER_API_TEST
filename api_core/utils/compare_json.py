@@ -65,16 +65,14 @@ def extract_item(json_obj):
     if type(json_obj) is not dict:
         if type(json_obj) is list:
             if len(json_obj) != 0:
-                print(json_obj[0])
                 return json_obj[0]
             else:
-                print(json_obj)
                 return json_obj
-    print(json_obj)
     return json_obj
 
 
 def equivalence_json(json, to_compare):
+    '''This method check if one dictionary contains the other'''
     try:
         for key in json:
             if not (str(json[key]) in str(to_compare[key]) or str(to_compare[key]) in str(json[key])):
@@ -83,3 +81,27 @@ def equivalence_json(json, to_compare):
         return True
     except KeyError:
         return False
+
+def response_contains_query(query_list, response):
+    """This method validates if a response, matches with a query.
+            params:
+                @query_list: List with query parameters
+                @response: A list containing the json response
+                @return: True if the the response contains only the query params,
+                 otherwise the result will be False
+                """
+    counter = 0
+    for i in range(0, len(response)):
+        for item in query_list:
+            if item in response[i]:
+                counter += 1
+            else:
+                print(f'{item} not in {response[i]}')
+                break
+
+    if counter == len(response * len(query_list)):
+        return True
+    else:
+        print('Response does not match query params')
+        return False
+
