@@ -1,4 +1,4 @@
-@meetings @crud @post
+@meetings @CRUD @post
 Feature: POST /meetings/{meetingId}/cancellation
 
   Background: Create a meeting

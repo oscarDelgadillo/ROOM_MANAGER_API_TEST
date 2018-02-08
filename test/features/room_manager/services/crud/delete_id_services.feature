@@ -1,4 +1,4 @@
-@crud
+@CRUD
 Feature: Delete services using service ID
 
   Scenario: This scenario verify Delete by ID

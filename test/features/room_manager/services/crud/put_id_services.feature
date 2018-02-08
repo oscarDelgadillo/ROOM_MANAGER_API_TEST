@@ -1,4 +1,4 @@
-@crudPut
+@CRUD
 Feature: Put services using service ID
 
   @after_delete_service
