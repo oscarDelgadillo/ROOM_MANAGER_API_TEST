@@ -80,5 +80,5 @@ def request(base_url, endpoint, method, credentials, item_id, data, params):
         headers['Content-Type'] = 'application/json'
         return put_request(base_url, endpoint, credentials, data)
     elif method == 'GET':
-        # get_delete_request(base_url, endpoint, method, credentials, item_id, params)
-        return get_delete(base_url, endpoint, credentials, data)
+        return get_delete_request(base_url, endpoint, method, credentials, item_id, params)
+
