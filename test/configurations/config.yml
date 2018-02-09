@@ -5,4 +5,3 @@ root_path: /api
 version: /v1
 protocol: http
 data_base_rm : rmserver
-data_base_ex : exchangeservicedb

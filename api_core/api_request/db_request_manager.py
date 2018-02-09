@@ -59,7 +59,6 @@ def to_json(request):
         result.update(doc)
     return result
 
-
 def to_array_json(request):
     """This method performs conversion of database response Cursor to Json.
                 params:
@@ -69,15 +68,3 @@ def to_array_json(request):
     for doc in request:
         result.append(doc)
     return result
-
-
-def remove_docs_from_collection_db(host, port, data_base_name, collection):
-    """"This methos remove all documents from collection from database
-        @host: data base server direction
-        @port: data base port
-        @data_base_name: name of the data base
-        @collection: collection name(table)
-     """
-    client = MongoClient(host, port)
-    data_base = client[data_base_name]
-    data_base[collection].delete_many({})

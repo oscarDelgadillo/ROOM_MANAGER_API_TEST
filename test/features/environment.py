@@ -1,8 +1,6 @@
 import yaml
 import logging
-
-from api_core.api_request.api_request_manager import get_delete_request, request
-from api_core.api_request.db_request_manager import remove_docs_from_collection_db
+from api_core.api_request.api_request_manager import get_delete_request, delete_request, request
 
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
@@ -30,7 +28,6 @@ def before_all(context):
     context.version = config_data['version']
     context.protocol = config_data['protocol']
     context.database = config_data['data_base_rm']
-    context.database_ex = config_data['data_base_ex']
 
     context.base_url = '{}://{}{}{}{}{}'.format(context.protocol, context.rm_host, ':', context.rm_port,
                                                 context.root_path,
@@ -49,6 +46,8 @@ def before_all(context):
     context.after_method = None
     context.item_ids = {}
     context.responses = {}
+
+
 
     context.accounts = {}
     context.accounts['__USER_ADMINISTRATOR'] = config_data_accounts['__USER_ADMINISTRATOR']
@@ -76,9 +75,6 @@ def before_all(context):
     context.services['__NAME_SERVER'] = config_data_services['__NAME_SERVER']
     context.services['__VERSION_SERVER'] = config_data_services['__VERSION_SERVER']
 
-    remove_docs_from_collection_db(context.rm_host, context.rm_db_port, context.database, 'meetings')
-    remove_docs_from_collection_db(context.rm_host, context.rm_db_port, context.database_ex, 'meetings')
-
 
 def after_step(context, step):
     """This method executes actions after step"""
@@ -92,9 +88,9 @@ def after_scenario(context, scenario):
     logger.info("Starting After Scenario execution...")
     if 'delete_item' in scenario.tags:
         get_delete_request(context.base_url, context.after_endpoint, 'DELETE',
-                           context.after_credentials,
-                           context.after_item_id,
-                           None)
+                                 context.after_credentials,
+                                 context.after_item_id,
+                                 None)
 
     # """This method delete a meeting by ID """
     if 'after_delete_item' in scenario.tags:
@@ -110,5 +106,6 @@ def after_scenario(context, scenario):
             context.endpoint = '/{}/{}'.format(aux_endpoint[1], context.item_ids["backup_id"])
 
         request(context.base_url, context.endpoint, "DELETE", context.credentials,
-                context.item_id,
-                context.data, context.params)
+                      context.item_id,
+                      context.data, context.params)
+

@@ -1,4 +1,4 @@
-@functional
+@functional_services
 Feature: Get Services Id functional testing
   Validate service by id retrieving Services
 
