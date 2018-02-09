@@ -34,7 +34,6 @@ def step_impl(context, new_response):
 
 
 @step(u'The response "{actual_response}" should be equal to response "{expected_response}"')
-# @then(u'It should be equal "{actual_response}" and "{expected_response}"')
 def step_impl(context, actual_response, expected_response):
     expect(compare_json(context.responses[actual_response].json(),
                         context.responses[expected_response].json())).to_be_truthy()
@@ -62,11 +61,3 @@ def step_impl(context, actual_response, collection):
     json_compare = to_array_json(context.request)[0]
     expect(equivalence_json(db_json, json_compare)).to_be_truthy()
 
-
-# @then(u'The response "{response}" should have a valid {schema_name} schema')
-# def step_impl(context, response, schema_name):
-#     print(">>>>>>>>>>>", context.response.json())
-#     print(">>>>>>>>>>>",context.responses[response].json())
-#     print('<<<<<<<<<<',validate_schema(context.responses[response].json(), schema_name))
-#     # expect(validate_schema(context.responses[response].json(), schema_name)).to_be_truthy()
-#     expect(False).to_be_truthy()
