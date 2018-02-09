@@ -7,7 +7,7 @@ from api_core.utils.compare_json import compare_json
 
 @step(u'I send the request delete')
 def step_impl(context):
-    context.resp = get_delete_request(context.base_url,
+    context.response = get_delete_request(context.base_url,
                                       context.endpoint,
                                       context.method,
                                       context.credentials,
@@ -17,7 +17,7 @@ def step_impl(context):
 
 @step(u'I send the request update')
 def step_impl(context):
-    context.resp = post_put_request(context.base_url,
+    context.response = post_put_request(context.base_url,
                                     context.endpoint,
                                     'PUT',
                                     context.credentials,
@@ -27,7 +27,7 @@ def step_impl(context):
 
 @step(u'I construct a expected response')
 def step_impl(context):
-    context.actual_json = context.resp.json()
+    context.actual_json = context.response.json()
     context.expect_json = context.data
     context.expect_json['_id'] = context.id_meeting
     context.expect_json['body'] = context.actual_json['body']
